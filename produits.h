@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QSqlQueryModel>
+#include "qcustomplot.h"
 class Produits
 {
 public:
@@ -20,6 +21,7 @@ public:
     QSqlQueryModel* afficher();
     bool supprimer (int);
     bool modifier(int id);
+    void stat(QCustomPlot *customPlot);
 private:
     int id;
     QString nom_produit , categorie ;

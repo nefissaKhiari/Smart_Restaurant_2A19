@@ -25,15 +25,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+    QrCode.cpp \
+    fournisseur.cpp \
         main.cpp \
         mainwindow.cpp \
     connection.cpp \
-    produits.cpp
+    produits.cpp \
+    qcustomplot.cpp
 
 HEADERS += \
+    QrCode.hpp \
+    fournisseur.h \
         mainwindow.h \
     connection.h \
-    produits.h
+    produits.h \
+    qcustomplot.h
 
 FORMS += \
         mainwindow.ui
@@ -42,3 +48,8 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    resource.qrc
+
+DISTFILES +=
