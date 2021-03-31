@@ -75,32 +75,3 @@ bool Employe::modifier(int id)
     query.bindValue(":telephone",telephone);
     return query.exec();
 }
-
-QSqlQueryModel * Employe::Find_Employe()
-{
-    QSqlQueryModel * model = new QSqlQueryModel();
-    QSqlQuery query;
-    query.prepare("SELECT id,nom,prenom,adresse,telephone FROM employe");
-
-    query.exec();
-    model->setQuery(query);
-    return model;
-}
-
-QSqlQueryModel * Employe::rechercher(QString search)
-{
-
-    QSqlQueryModel * model= new QSqlQueryModel();
-    QString qry="select * from employe where id like '%"+search+"%' or nom like '%"+search+"%' or prenom like '%"+search+"%' or adresse like '%"+search+"%' or telephone like '%"+search+"%'";
-    qDebug()<<qry;
-    model->setQuery(qry);
-    return model;
-}
-
-QSqlQueryModel * Employe::tri()
-{
-    QSqlQueryModel * model= new QSqlQueryModel();
-    model->setQuery("SELECT * FROM employe ORDER BY id");
-    return model;
-
-}

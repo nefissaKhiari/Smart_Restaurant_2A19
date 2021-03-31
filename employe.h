@@ -22,6 +22,9 @@ public:
     QSqlQueryModel* afficher();
     bool supprimer (int);
     bool modifier(int id);
+    QSqlQueryModel * Find_Employe();
+    QSqlQueryModel * rechercher(QString search);
+    QSqlQueryModel * tri();
 private:
     int id;
     QString nom , prenom,adresse ;
@@ -29,4 +32,4 @@ private:
 
    };
 
-   #endif // PRODUITS_H
+   #endif //
