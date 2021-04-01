@@ -28,12 +28,14 @@ SOURCES += \
     livraisons.cpp \
         main.cpp \
         mainwindow.cpp \
-    connection.cpp
+    connection.cpp \
+    vehicule.cpp
 
 HEADERS += \
     livraisons.h \
         mainwindow.h \
-    connection.h
+    connection.h \
+    vehicule.h
 
 FORMS += \
         mainwindow.ui
@@ -42,3 +44,12 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    resource.qrc
+
+DISTFILES += \
+    resource/confirm.png \
+    resource/cross .png \
+    resource/cross .png \
+    resource/edit .png

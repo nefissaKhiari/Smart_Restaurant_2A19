@@ -31,7 +31,6 @@ bool livraisons::ajouter()
     query.bindValue(":ID",ID);
     query.bindValue(":DATE_L",DATE_L);
     query.bindValue(":ID_LIVREUR",ID_LIVREUR);
-
     return query.exec();
 }
 bool livraisons::supprimer(QString ID )
@@ -59,14 +58,26 @@ QSqlQueryModel* livraisons::afficher()
     return model;
 }
 
-bool livraisons::modifier(int ID)
+bool livraisons::modifier()
 {
     QSqlQuery query;
-    query.prepare("UPDATE livraisons SET ID= :ID,DATE_L = :DATE_L,ID_LIVREUR = :ID_LIVREUR ");
+    query.prepare("UPDATE livraisons SET ID= :ID,DATE_L = :DATE_L,ID_LIVREUR = :ID_LIVREUR WHERE ID=:ID");
     query.bindValue(":ID",ID);
     query.bindValue(":DATE_L",DATE_L);
     query.bindValue(":ID_LIVREUR",ID_LIVREUR);
 
     return    query.exec();
+}
+
+
+
+QSqlQueryModel * livraisons::rechercher(QString search)
+{
+
+    QSqlQueryModel * model= new QSqlQueryModel();
+    QString qry="select * from livraisons where ID like '%"+search+"%'  or DATE_L like '%"+search+"%'or ID_LIVREUR like '%"+search+"%'";
+    qDebug()<<qry;
+    model->setQuery(qry);
+    return model;
 }
 
