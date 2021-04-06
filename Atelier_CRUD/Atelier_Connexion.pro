@@ -25,20 +25,27 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+    ajouterplat.cpp \
     commande.cpp \
         main.cpp \
         mainwindow.cpp \
-    connection.cpp
+    connection.cpp \
+    plates.cpp
 
 HEADERS += \
+    ajouterplat.h \
     commande.h \
         mainwindow.h \
-    connection.h
+    connection.h \
+    plates.h
 
 FORMS += \
+        ajouterplat.ui \
         mainwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES +=

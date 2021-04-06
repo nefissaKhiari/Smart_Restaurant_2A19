@@ -10,11 +10,11 @@
 class Commande
 {
     int num, idemploye;
-    QString date;
+    QString date,nomp;
 public:
 
      Commande(){}
-     Commande(int num, QString date, int idemploye);
+     Commande(int , QString , int , QString );
 
 
      int getNum(){return num;}
@@ -31,6 +31,7 @@ public:
      bool ajouter();
      bool SupprimerCommande(int);
      QSqlQueryModel* AfficherCommande();
+     bool modifierCommande();
 
 };
 

@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ajouterplat</class>
+ <widget class="QDialog" name="ajouterplat">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>811</width>
+    <height>428</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QTabWidget" name="Tab_plats">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>821</width>
+     <height>421</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-image: url(:/new/prefix1/folda/back.png);</string>
+   </property>
+   <property name="currentIndex">
+    <number>3</number>
+   </property>
+   <widget class="QWidget" name="tab">
+    <attribute name="title">
+     <string>Afficher Plats</string>
+    </attribute>
+    <widget class="QTableView" name="Tab">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>40</y>
+       <width>411</width>
+       <height>271</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_3">
+     <property name="geometry">
+      <rect>
+       <x>310</x>
+       <y>350</y>
+       <width>131</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+background-color:#0094ff;
+font: 8pt &quot;MS Shell Dlg 2&quot;;
+
+}
+QPushButton:hover
+{background-color: rgb(70, 144, 255);
+color :white;
+
+
+}</string>
+     </property>
+     <property name="text">
+      <string>Afficher</string>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>../../../../../Downloads/Final/E-Health_care_2A12-remote/folda/add.PNG</normaloff>../../../../../Downloads/Final/E-Health_care_2A12-remote/folda/add.PNG</iconset>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab_2">
+    <attribute name="icon">
+     <iconset>
+      <normaloff>../../../../../Downloads/Final/E-Health_care_2A12-remote/folda/add.PNG</normaloff>../../../../../Downloads/Final/E-Health_care_2A12-remote/folda/add.PNG</iconset>
+    </attribute>
+    <attribute name="title">
+     <string>Ajouter Plats</string>
+    </attribute>
+    <widget class="QLabel" name="label_5">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>70</y>
+       <width>71</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Nom plat</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_6">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>110</y>
+       <width>81</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Prix</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton">
+     <property name="geometry">
+      <rect>
+       <x>340</x>
+       <y>280</y>
+       <width>131</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+background-color:#0094ff;
+font: 8pt &quot;MS Shell Dlg 2&quot;;
+
+}
+QPushButton:hover
+{background-color: rgb(70, 144, 255);
+color :white;
+
+
+}</string>
+     </property>
+     <property name="text">
+      <string>Ajouter le plat</string>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>../../../../../Downloads/Final/E-Health_care_2A12-remote/folda/add.PNG</normaloff>../../../../../Downloads/Final/E-Health_care_2A12-remote/folda/add.PNG</iconset>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_Nomplat">
+     <property name="geometry">
+      <rect>
+       <x>260</x>
+       <y>70</y>
+       <width>113</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_Prix">
+     <property name="geometry">
+      <rect>
+       <x>260</x>
+       <y>110</y>
+       <width>113</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QTableView" name="ID_plat">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>81</width>
+       <height>61</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="TAB3">
+    <attribute name="icon">
+     <iconset>
+      <normaloff>../../../../../Downloads/Final/E-Health_care_2A12-remote/folda/delete.PNG</normaloff>../../../../../Downloads/Final/E-Health_care_2A12-remote/folda/delete.PNG</iconset>
+    </attribute>
+    <attribute name="title">
+     <string>Supprimer Plats</string>
+    </attribute>
+    <widget class="QLabel" name="label_21">
+     <property name="geometry">
+      <rect>
+       <x>60</x>
+       <y>140</y>
+       <width>121</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>ID Plat</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="IDP_SUP">
+     <property name="geometry">
+      <rect>
+       <x>310</x>
+       <y>140</y>
+       <width>201</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="Supprimer">
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>300</y>
+       <width>131</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="statusTip">
+      <string extracomment="Cliquez pour supprimer"/>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+background-color:#0094ff;
+font: 8pt &quot;MS Shell Dlg 2&quot;;
+
+}
+QPushButton:hover
+{background-color: rgb(70, 144, 255);
+color :white;
+
+
+}</string>
+     </property>
+     <property name="text">
+      <string>Supprimer Plat</string>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>../../../../../Downloads/Final/E-Health_care_2A12-remote/folda/delete.PNG</normaloff>../../../../../Downloads/Final/E-Health_care_2A12-remote/folda/delete.PNG</iconset>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab_3">
+    <attribute name="title">
+     <string>Modifier plats</string>
+    </attribute>
+    <widget class="QLineEdit" name="Nomplat">
+     <property name="geometry">
+      <rect>
+       <x>180</x>
+       <y>60</y>
+       <width>113</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_8">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>60</y>
+       <width>71</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Nom plat</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="prixplat">
+     <property name="geometry">
+      <rect>
+       <x>180</x>
+       <y>110</y>
+       <width>113</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_10">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>120</y>
+       <width>47</width>
+       <height>14</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Prix</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_2">
+     <property name="geometry">
+      <rect>
+       <x>390</x>
+       <y>250</y>
+       <width>131</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+background-color:#0094ff;
+font: 8pt &quot;MS Shell Dlg 2&quot;;
+
+}
+QPushButton:hover
+{background-color: rgb(70, 144, 255);
+color :white;
+
+
+}</string>
+     </property>
+     <property name="text">
+      <string>Modifier</string>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>../../../../../Downloads/Final/E-Health_care_2A12-remote/folda/add.PNG</normaloff>../../../../../Downloads/Final/E-Health_care_2A12-remote/folda/add.PNG</iconset>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_9">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>20</y>
+       <width>71</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>ID Plat</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="idplat">
+     <property name="geometry">
+      <rect>
+       <x>180</x>
+       <y>20</y>
+       <width>113</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QPushButton" name="pushButton_4">
+   <property name="geometry">
+    <rect>
+     <x>660</x>
+     <y>0</y>
+     <width>151</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Ajouter une commande</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
