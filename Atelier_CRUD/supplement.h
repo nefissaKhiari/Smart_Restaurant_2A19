@@ -13,8 +13,9 @@ class supplement
     QString nomsup,typesup;
     int prixsup;
 public:
-    supplement();
-
+    supplement(){}
+    supplement(QString,QString,int);
+    QString idcommande;
 
 
 
@@ -28,14 +29,14 @@ public:
     void setPrixSup(int prixsup){this->prixsup=prixsup;}
 
 
-    bool ajouterPlat(int platid, int qty);
+    bool AjouterSuppcom(int idsup, int qtysup);
     bool ajouterSup();
-    bool SupprimerCommande(int);
-    QSqlQueryModel* AfficherCommande();
+    bool SupprimerSupp(int);
+    QSqlQueryModel* AfficherSupplement();
     QSqlQueryModel*AfficherPlat();
-    bool ConfirmCom();
-    bool modifierEmployer(int);
-    bool modifierQTY(int,int,int);
+
+    bool modifierSupplement(int);
+    bool modifierQTYsup(int,int , int);
 };
 
 #endif // SUPPLEMENT_H

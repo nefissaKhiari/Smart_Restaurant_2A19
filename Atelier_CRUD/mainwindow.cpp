@@ -40,7 +40,7 @@ void MainWindow::UpdateTime()
 {
     ui->lbl_time->setText(QTime::currentTime().toString("hh:mm:ss"));
     ui->lbl_time_2->setText(QTime::currentTime().toString("hh:mm:ss"));
-
+    ui->lbl_time_3->setText(QTime::currentTime().toString("hh:mm:ss"));
 
 }
 void MainWindow::on_pushButton_5_clicked()
@@ -133,12 +133,18 @@ void MainWindow::showEvent(QShowEvent *ev)
 void MainWindow::RefreshTables(){
     ui->Tab->setModel(x.AfficherCommande());
     ui->Tab2->setModel(x.AfficherPlat());
+    ui->Tab3_2->setModel(t.AfficherSupplement());
+    ui->Tab3->setModel(t.AfficherSupplement());
+    ui->Tab3->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->Tab3_2->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->Tab->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->Tab2->setSelectionBehavior(QAbstractItemView::SelectRows);
+    /************************************/
     QSqlQueryModel * model= new QSqlQueryModel();
     model->setQuery("SELECT NUMC FROM COMMANDES");
-
     ui->NUMCmodif->setModel(model);
+    ui->IDSmodif->setModel(model);
+    /*******************************************/
     QTableView * view = new QTableView();
     view->verticalHeader()->hide();
 }
@@ -198,6 +204,157 @@ void MainWindow::on_UpdateQuantity_clicked()
     int platid = QString (IDplat).toInt();
     Commande c;
     bool test=c.modifierQTY(num,platid,qty);
+    if (test)
+        {
+        QMessageBox:: information(nullptr, QObject::tr("OK"),
+                                           QObject::tr("Ajout effectué\n"
+                                                       "click cancel to exit."),QMessageBox::Cancel);
+        }
+    else
+        QMessageBox::critical(nullptr, QObject::tr("Not OK"),
+                              QObject::tr("Ajout non effectué.\n"
+                                          "click Cancel to exit."),QMessageBox::Cancel);
+this->RefreshTables();
+
+}
+
+void MainWindow::on_ADD_supp_clicked()
+{
+    QString nomsup=ui->lineEdit_nom_supp->text();
+    QString typesup=ui->lineEdit_Type_supp->text();
+    int prixsup=ui->lineEdit_prix_supp->text().toInt();
+    supplement s(nomsup,typesup,prixsup);
+
+    bool test=s.ajouterSup();
+    if (test)
+        {
+        QMessageBox:: information(nullptr, QObject::tr("OK"),
+                                           QObject::tr("Ajout effectué\n"
+                                                       "click cancel to exit."),QMessageBox::Cancel);
+        }
+    else
+        QMessageBox::critical(nullptr, QObject::tr("Not OK"),
+                              QObject::tr("Ajout non effectué.\n"
+                                          "click Cancel to exit."),QMessageBox::Cancel);
+this->RefreshTables();
+}
+
+void MainWindow::on_Delete_sup_clicked()
+{
+    QMessageBox msg;
+    QItemSelectionModel *select = ui->Tab3_2->selectionModel();
+    if (!select->hasSelection()){
+         msg.setText("Please select something");
+
+         msg.setIcon(msg.Critical);
+         msg.exec();
+         return;
+    }
+    QString IdSup=select->selectedRows().at(0).data().toString();
+    int idsup = QString (IdSup).toInt();
+    supplement c;
+    bool test=c.SupprimerSupp(idsup);
+    if (test)
+        {
+        QMessageBox:: information(nullptr, QObject::tr("OK"),
+                                           QObject::tr("Suppression effectuée avec succès\n"
+                                                       "click cancel to exit."),QMessageBox::Cancel);
+        }
+    else
+        QMessageBox::critical(nullptr, QObject::tr("Not OK"),
+                              QObject::tr("suppression non effectué.\n"
+                                          "click Cancel to exit."),QMessageBox::Cancel);
+this->RefreshTables();
+
+
+}
+
+void MainWindow::on_Modifier_Nom_sup_clicked()
+{
+    QMessageBox msg;
+    QString nomsup=ui->lineEdit_nom_sup->text();
+    QString typesup=ui->lineEdit_type_sup->text();
+    int prixsup=ui->lineEdit_prix_sup->text().toInt();
+    QItemSelectionModel *select = ui->Tab3_2->selectionModel();
+    if (!select->hasSelection()){
+         msg.setText("Please select something");
+
+         msg.setIcon(msg.Critical);
+         msg.exec();
+         return;
+    }
+    QString IdSup=select->selectedRows().at(0).data().toString();
+    int idsup = QString (IdSup).toInt();
+    supplement c(nomsup,typesup,prixsup);
+    bool test=c.modifierSupplement(idsup);
+    if (test)
+        {
+        QMessageBox:: information(nullptr, QObject::tr("OK"),
+                                           QObject::tr("Modification effectuée avec succès\n"
+                                                       "click cancel to exit."),QMessageBox::Cancel);
+        }
+    else
+        QMessageBox::critical(nullptr, QObject::tr("Not OK"),
+                              QObject::tr("Modification non effectué.\n"
+                                          "click Cancel to exit."),QMessageBox::Cancel);
+this->RefreshTables();
+
+
+
+}
+
+
+
+
+void MainWindow::on_ADD_supp_4_clicked()
+{
+    QMessageBox msg;
+    QItemSelectionModel *select = ui->Tab3->selectionModel();
+    if (!select->hasSelection()){
+         msg.setText("Please select a Something");
+
+         msg.setIcon(msg.Critical);
+         msg.exec();
+         return;
+    }
+    QString idsup=select->selectedRows().at(0).data().toString();
+
+    int qty=ui->qtysupp->text().toInt();
+    int supid = QString (idsup).toInt();
+    supplement c;
+    bool test=c.AjouterSuppcom(supid,qty);
+    if (test)
+        {
+        QMessageBox:: information(nullptr, QObject::tr("OK"),
+                                           QObject::tr("Ajout effectué\n"
+                                                       "click cancel to exit."),QMessageBox::Cancel);
+        }
+    else
+        QMessageBox::critical(nullptr, QObject::tr("Not OK"),
+                              QObject::tr("Ajout non effectué.\n"
+                                          "click Cancel to exit."),QMessageBox::Cancel);
+this->RefreshTables();
+}
+
+void MainWindow::on_UpdateQuantity_2_clicked()
+{
+    QMessageBox msg;
+    QItemSelectionModel *select = ui->Tab3->selectionModel();
+    if (!select->hasSelection()){
+         msg.setText("Please select something");
+
+         msg.setIcon(msg.Critical);
+         msg.exec();
+         return;
+    }
+    QString idsup=select->selectedRows().at(0).data().toString();
+    msg.setText(idsup);
+    msg.exec();
+    int qty=ui->lineEdit_QTY_2->text().toInt();
+    int num=ui->IDSmodif->currentText().toInt();
+    int supid = QString (idsup).toInt();
+    supplement c;
+    bool test=c.modifierQTYsup(num,supid,qty);
     if (test)
         {
         QMessageBox:: information(nullptr, QObject::tr("OK"),

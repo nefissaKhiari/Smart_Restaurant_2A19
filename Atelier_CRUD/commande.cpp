@@ -32,12 +32,6 @@ bool Commande::ajouterPlat(int platid, int qty){
      return query.exec();
 }
 
-bool Commande::ConfirmCom(){
-        QSqlQuery query;
-        QSqlQuery queryPrix("");
-          queryPrix.next();
-
-}
 
 bool Commande::SupprimerCommande(int Num)
  {

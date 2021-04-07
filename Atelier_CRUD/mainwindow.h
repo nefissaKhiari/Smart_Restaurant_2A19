@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include "commande.h"
-
+#include "supplement.h"
 
 namespace Ui {
 class MainWindow;
@@ -61,12 +61,27 @@ private slots:
 
     void on_UpdateQuantity_clicked();
 
+    void on_ADD_supp_clicked();
+
+    void on_Delete_sup_clicked();
+
+    void on_Modifier_Nom_sup_clicked();
+
+    void on_ADD_supp_2_clicked();
+
+    void on_ADD_supp_3_clicked();
+
+    void on_ADD_supp_4_clicked();
+
+    void on_UpdateQuantity_2_clicked();
+
 private:
     Ui::MainWindow *ui;
     Commande x;
     void showEventHelper();
     QTimer *timer_1s;
     void RefreshTables();
+    supplement t;
 };
 
 #endif // MAINWINDOW_H

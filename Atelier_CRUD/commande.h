@@ -29,7 +29,7 @@ class Commande
      bool SupprimerCommande(int);
      QSqlQueryModel* AfficherCommande();
      QSqlQueryModel*AfficherPlat();
-     bool ConfirmCom();
+
      bool modifierEmployer(int);
      bool modifierQTY(int,int,int);
 
