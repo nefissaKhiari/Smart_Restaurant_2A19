@@ -18,7 +18,7 @@
 #include <QDebug>
 #include <QtPrintSupport/QPrintDialog>
 #include<QtPrintSupport/QPrinter>
-
+#include "qcustomplot.h"
 
 
 
@@ -62,9 +62,23 @@ Gestionplatsmenu::Gestionplatsmenu(QWidget *parent)
     QString datee=date.toString();
     ui->DateTime_->setText(datee);
     QSqlQuery qry;
-    connect(ui->sendBtn, SIGNAL(clicked()),this, SLOT(sendMail()));
-    connect(ui->browseBtn, SIGNAL(clicked()), this, SLOT(browse()));
 
+    qry.prepare("SELECT COUNT (*) FROM plats where type='special'");
+        qry.exec();
+        int special= 0;
+        if (qry.next()) {
+            special= qry.value(0).toInt();
+        }
+       QString special_string = QString::number(special);
+        ui->count->setText(special_string);
+        qry.prepare("SELECT COUNT (*) FROM plats where type='simple'");
+            qry.exec();
+            int simple= 0;
+            if (qry.next()) {
+                simple= qry.value(0).toInt();
+            }
+           QString simple_string = QString::number(simple);
+            ui->count_2->setText(simple_string);
 
 }
 
@@ -103,11 +117,11 @@ void Gestionplatsmenu::on_ajouter_B_clicked()
 {
 int id_menu= ui->idmenu->currentText().toInt();
     QString nom = ui->nom_LE->text();
-
+    QString ingredient = ui->ingredient_LE->text();
     QString categorie = ui->categorie_LE->text();
     QString prix = ui->prix_LE->text();
      QString type = ui->type->currentText();
-    Plats P( nom, categorie,prix,type,id_menu );
+    Plats P( nom,ingredient, categorie,prix,type,id_menu );
     bool test = P.ajouter();
     if (test)
 
@@ -142,11 +156,10 @@ void Gestionplatsmenu::on_ConfrimEdit_B_clicked()
     Plats P1;
  P1.setId(ui->idList_CB->currentText().toInt());
     P1.setNom(ui->nom_LE->text());
-
+    P1.setIngredient(ui->ingredient_LE->text());
      P1.setCategorie(ui->categorie_LE->text());
       P1.setPrix(ui->prix_LE->text());
       P1.setType(ui->type->currentText());
-      P1.setId_menu(ui->idmenu->currentText().toInt());
       qDebug() << P1.getType();
       bool test=P1.modifier();
 
@@ -173,11 +186,10 @@ void Gestionplatsmenu::on_ListEdit_B_clicked()
         while(qry.next()) {
 
             ui->nom_LE->setText(qry.value(1).toString());
-
-            ui->categorie_LE->setText(qry.value(2).toString());
-            ui->prix_LE->setText(qry.value(3).toString());
-               ui->type->setCurrentText(qry.value(4).toString());
-               ui->idmenu->setCurrentText(qry.value(5).toString());
+            ui->ingredient_LE->setText(qry.value(2).toString());
+            ui->categorie_LE->setText(qry.value(3).toString());
+            ui->prix_LE->setText(qry.value(4).toString());
+               ui->type->setCurrentText(qry.value(5).toString());
         }
     }
     ui->tabWidget->setCurrentIndex(1);
@@ -192,10 +204,10 @@ void Gestionplatsmenu::on_ListEditME_B_clicked()
     if(qry.exec()) {
         while(qry.next()) {
 
-            ui->nomME_LE->setText(qry.value(1).toString());
-            ui->prixME_LE->setText(qry.value(2).toString());
-              ui->descME_LE->setText(qry.value(3).toString());
-
+            ui->nomME_LE_Edit->setText(qry.value(1).toString());
+            ui->prixME_LE_Edit->setText(qry.value(2).toString());
+              ui->descME_LE_Edit->setText(qry.value(3).toString());
+              ui->idplat_LE_Edit->setText(qry.value(4).toString());
         }
     }
     ui->tabWidget->setCurrentIndex(1);
@@ -229,9 +241,9 @@ void Gestionplatsmenu::on_ConfrimEditME_B_clicked()
 {
     Menu M1 ;
     M1.setId(ui->idListME_CB->currentText().toInt());
-    M1.setNom(ui->nomME_LE->text());
-      M1.setPrix(ui->prixME_LE->text());
-      M1.setDescription(ui->descME_LE->text());
+    M1.setNom(ui->nomME_LE_Edit->text());
+      M1.setPrix(ui->prixME_LE_Edit->text());
+      M1.setDescription(ui->descME_LE_Edit->text());
       bool test = M1.modifier1();
       if (test)
 
@@ -300,7 +312,18 @@ void Gestionplatsmenu::on_bouton_imprimer_clicked()
                 delete document;
 }
 
-
+void Gestionplatsmenu::on_bouton_imprimer_2_clicked()
+{
+    /* QPrinter printer;
+     printer.setPrinterName("printer");
+     QPrintDialog dialog(&printer,this);
+     if(dialog.exec()==QDialog::Rejected) return;
+     ui->textEdit->print(&printer);*/
+         QPrinter printer;
+         QPrintDialog *printDialog = new QPrintDialog(&printer, this);
+         printDialog->setWindowTitle("Imprimer Document");
+         printDialog->exec();
+}
 
 
 
@@ -327,11 +350,11 @@ void Gestionplatsmenu::on_exporter_2_clicked()
     //colums to export
  obj.addField(0, "id", "number");
     obj.addField(1, "nom", "char(20)");
-
-    obj.addField(2, "categorie", "char(20)");
-     obj.addField(3, "type", "char(20)");
-      obj.addField(4, "prix", "char(20)");
-      obj.addField(5, "id_menu", "char(20)");
+    obj.addField(2, "ingredient", "char(20)");
+    obj.addField(3, "categorie", "char(20)");
+     obj.addField(4, "type", "char(20)");
+      obj.addField(5, "prix", "char(20)");
+      obj.addField(6, "id_menu", "char(20)");
 
 
     int retVal = obj.export2Excel();
@@ -369,56 +392,54 @@ void Gestionplatsmenu::on_pushButton_3_clicked()
 void Gestionplatsmenu::on_exporterM_clicked()
 {
     QString strStream;
-                QTextStream out(&strStream);
+                        QTextStream out(&strStream);
 
-                const int rowCount = ui->menu_tab->model()->rowCount();
-                const int columnCount = ui->menu_tab->model()->columnCount();
-                QString TT = QDate::currentDate().toString("yyyy/MM/dd");
-                out <<"<html>\n"
-                      "<head>\n"
-                       "<meta Content=\"Text/html; charset=Windows-1251\">\n"
+                        const int rowCount = ui->menu_tab->model()->rowCount();
+                        const int columnCount = ui->menu_tab->model()->columnCount();
 
-                    << "<title>MENU LIST<title>\n "
+                        out <<  "<html>\n"
+                            "<head>\n"
+                            "<meta Content=\"Text/html; charset=Windows-1251\">\n"
+                            <<  QString("<title>%1</title>\n").arg("strTitle")
+                            <<  "</head>\n"
+                            "<body bgcolor=#ffffff link=#5000A0>\n"
+                           //     "<align='right'> " << datefich << "</align>"
+                            "<center> <H1>Liste des plats </H1></br></br><table border=1 cellspacing=0 cellpadding=2>\n";
 
-                    << "</head>\n"
-                    "<body bgcolor=#d6e5ff link=#5000A0>\n"
+                        // headers
+                        out << "<thead><tr bgcolor=#f0f0f0> <th>Numero</th>";
+                        for (int column = 0; column < columnCount; column++)
+                            if (!ui->menu_tab->isColumnHidden(column))
+                                out << QString("<th>%1</th>").arg(ui->menu_tab->model()->headerData(column, Qt::Horizontal).toString());
+                        out << "</tr></thead>\n";
 
-                    "<h1 style=\"text-align: center;\"><strong> ****LISTE DES MENU **** "+TT+"</strong></h1>"
-                    "<table style=\"text-align: center; font-size: 20px;\" border=1>\n "
-                      "</br> </br>";
-                // headers
-                out << "<thead><tr bgcolor=#d6e5ff>";
-                for (int column = 0; column < columnCount; column++)
-                    if (!ui->menu_tab->isColumnHidden(column))
-                        out << QString("<th>%1</th>").arg(ui->menu_tab->model()->headerData(column, Qt::Horizontal).toString());
-                out << "</tr></thead>\n";
-
-                // data table
-                for (int row = 0; row < rowCount; row++) {
-                    out << "<tr>";
-                    for (int column = 0; column < columnCount; column++) {
-                        if (!ui->menu_tab->isColumnHidden(column)) {
-                            QString data =ui->menu_tab->model()->data(ui->menu_tab->model()->index(row, column)).toString().simplified();
-                            out << QString("<td bkcolor=0>%1</td>").arg((!data.isEmpty()) ? data : QString("&nbsp;"));
+                        // data table
+                        for (int row = 0; row < rowCount; row++) {
+                            out << "<tr> <td bkcolor=0>" << row+1 <<"</td>";
+                            for (int column = 0 ; column < columnCount; column++) {
+                                if (!ui->menu_tab->isColumnHidden(column)) {
+                                    QString data = ui->menu_tab->model()->data(ui->menu_tab->model()->index(row, column)).toString().simplified();
+                                    out << QString("<td bkcolor=0>%1</td>").arg((!data.isEmpty()) ? data : QString("&nbsp;"));
+                                }
+                            }
+                            out << "</tr>\n";
                         }
-                    }
-                    out << "</tr>\n";
-                }
-                out <<  "</table>\n"
-                    "</body>\n"
-                    "</html>\n";
+                        out <<  "</table> </center>\n"
+                            "</body>\n"
+                            "</html>\n";
 
-                QTextDocument *document = new QTextDocument();
-                document->setHtml(strStream);
+                  QString fileName = QFileDialog::getSaveFileName((QWidget* )0, "Sauvegarder en PDF", QString(), "*.pdf");
+                    if (QFileInfo(fileName).suffix().isEmpty()) { fileName.append(".pdf"); }
 
-                QPrinter printer;
+                   QPrinter printer (QPrinter::PrinterResolution);
+                    printer.setOutputFormat(QPrinter::PdfFormat);
+                  /* printer.setPaperSize(QPrinter::A4);*/
+                  printer.setOutputFileName(fileName);
 
-                QPrintDialog *test = new QPrintDialog(&printer, NULL);
-                if (test->exec() == QDialog::Accepted) {
-                    document->print(&printer);
-                }
-
-                delete document;
+                   QTextDocument doc;
+                    doc.setHtml(strStream);
+                    /*doc.setPageSize(printer.pageRect().size()); // This is necessary if you want to hide the page number*/
+                    doc.print(&printer);
 }
 
 void Gestionplatsmenu::on_exporterXM_clicked()
@@ -465,8 +486,6 @@ void Gestionplatsmenu::on_pushButton_5_clicked()
 void Gestionplatsmenu::on_pushButton_6_clicked()
 {
     ui->tabWidget_2->setCurrentIndex(1);
-
-
 }
 
 void Gestionplatsmenu::on_bouton_imprimer_4_clicked()
@@ -508,68 +527,105 @@ void Gestionplatsmenu::on_pushButton_8_clicked()
     ui->plat_tab->setModel(P.afficher()) ;
     INFORMER(ui->labelmessage,"LISTE PLAT CHARGEE   ",3000);
 }
+QVector<double> Gestionplatsmenu::Statistique_vente()
+{
+    QSqlQuery q;
+    QVector<double> stat(2);
+    stat[0]=0;
+    stat[1]=0;
+
+    q.prepare("SELECT count (type) FROM plats WHERE type like '%special%'");
+    q.exec();
+    while (q.next())
+    {
+        stat[0]++;
+    }
+    q.prepare("SELECT count (type) FROM plats WHERE type like '%simple%'");
+    q.exec();
+    while (q.next())
+    {
+        stat[1]++;
+    }
+
+    return stat;
+}
+void Gestionplatsmenu::setupStyledDemo(QCustomPlot *customPlot)
+{
+    // prepare data:
+    QVector<double> x3(2), y3(20);
+    for (int i=0; i<x3.size(); ++i)
+    {
+      x3[i] = i+1;
+
+    }
+    for (int i=0; i<y3.size(); ++i)
+    {
+      y3[i] = i+1;
+
+    }
+     QCPGraph *graph1 = customPlot->addGraph();
 
 
+     QCPBars *bars1 = new QCPBars(customPlot->xAxis, customPlot->yAxis);
+     bars1->setWidth(9/(double)x3.size());
+     bars1->setData(x3, y3);
+     bars1->setPen(Qt::NoPen);
+     bars1->setBrush(QColor(10, 140, 70, 160));
+
+
+
+     // move bars above graphs and grid below bars:
+     customPlot->addLayer("abovemain", customPlot->layer("main"), QCustomPlot::limAbove);
+     customPlot->addLayer("belowmain", customPlot->layer("main"), QCustomPlot::limBelow);
+     graph1->setLayer("abovemain");
+     customPlot->xAxis->grid()->setLayer("belowmain");
+     customPlot->yAxis->grid()->setLayer("belowmain");
+
+     // set some pens, brushes and backgrounds:
+     customPlot->xAxis->setBasePen(QPen(Qt::white, 1));
+     customPlot->yAxis->setBasePen(QPen(Qt::white, 1));
+     customPlot->xAxis->setTickPen(QPen(Qt::white, 1));
+     customPlot->yAxis->setTickPen(QPen(Qt::white, 1));
+     customPlot->xAxis->setSubTickPen(QPen(Qt::white, 1));
+     customPlot->yAxis->setSubTickPen(QPen(Qt::white, 1));
+     customPlot->xAxis->setTickLabelColor(Qt::white);
+     customPlot->yAxis->setTickLabelColor(Qt::white);
+     customPlot->xAxis->grid()->setPen(QPen(QColor(140, 140, 140), 1, Qt::DotLine));
+     customPlot->yAxis->grid()->setPen(QPen(QColor(140, 140, 140), 1, Qt::DotLine));
+     customPlot->xAxis->grid()->setSubGridPen(QPen(QColor(80, 80, 80), 1, Qt::DotLine));
+     customPlot->yAxis->grid()->setSubGridPen(QPen(QColor(80, 80, 80), 1, Qt::DotLine));
+     customPlot->xAxis->grid()->setSubGridVisible(true);
+     customPlot->yAxis->grid()->setSubGridVisible(true);
+     customPlot->xAxis->grid()->setZeroLinePen(Qt::NoPen);
+     customPlot->yAxis->grid()->setZeroLinePen(Qt::NoPen);
+     customPlot->xAxis->setUpperEnding(QCPLineEnding::esSpikeArrow);
+     customPlot->yAxis->setUpperEnding(QCPLineEnding::esSpikeArrow);
+     QLinearGradient plotGradient;
+     plotGradient.setStart(0, 0);
+     plotGradient.setFinalStop(0, 350);
+     plotGradient.setColorAt(0, QColor(80, 80, 80));
+     plotGradient.setColorAt(1, QColor(50, 50, 50));
+     customPlot->setBackground(plotGradient);
+     QLinearGradient axisRectGradient;
+     axisRectGradient.setStart(0, 0);
+     axisRectGradient.setFinalStop(0, 350);
+     axisRectGradient.setColorAt(0, QColor(80, 80, 80));
+     axisRectGradient.setColorAt(1, QColor(30, 30, 30));
+     customPlot->axisRect()->setBackground(axisRectGradient);
+
+     customPlot->rescaleAxes();
+     customPlot->yAxis->setRange(0, 2);
+
+
+}
+
+void Gestionplatsmenu::on_pushButton_10_clicked()
+{
+      ui->tabWidget_2->setCurrentIndex(4);
+}
 
 void Gestionplatsmenu::on_pushButton_9_clicked()
 {
-
-        QString nom = ui->nomME_LE->text();
-
-
-
-        QString prix = ui->prixME_LE->text();
-         QString description = ui->descME_LE->text();
-
-      Menu M( nom, description,prix);
-      bool test = M.ajouter1();
-      if (test)
-
-      {
-          ui->menu_tab->setModel(M.afficher1()) ;
-          INFORMER(ui->labelmessage2," MENU AJOUTE AVEC SUCCES ",3000);
-      }
-      else
-
-      {INFORMER(ui->labelmessage2,"MENU NON AJOUTE ",3000);
-      }
-}
-void Gestionplatsmenu::browse()
-{
-    files.clear();
-
-    QFileDialog dialog(this);
-    dialog.setDirectory(QDir::homePath());
-    dialog.setFileMode(QFileDialog::ExistingFiles);
-
-    if (dialog.exec())
-        files = dialog.selectedFiles();
-
-    QString fileListString;
-    foreach(QString file, files)
-        fileListString.append( "\"" + QFileInfo(file).fileName() + "\" " );
-
-    ui->file->setText( fileListString );
-
-}
-void   Gestionplatsmenu::sendMail()
-{
-    Smtp* smtp = new Smtp("farah.hasnaoui@esprit.tn",ui->mail_pass->text(), "smtp.gmail.com");
-    connect(smtp, SIGNAL(status(QString)), this, SLOT(mailSent(QString)));
-
-    if( !files.isEmpty() )
-        smtp->sendMail("farah.hasnaoui@esprit.tn", ui->rcpt->text() , ui->subject->text(),ui->msg->toPlainText(), files );
-    else
-        smtp->sendMail("farah.hasnaoui@esprit.tn", ui->rcpt->text() , ui->subject->text(),ui->msg->toPlainText());
-}
-void   Gestionplatsmenu::mailSent(QString status)
-{
-
-    if(status == "Message sent")
-        QMessageBox::warning( nullptr, tr( "Qt Simple SMTP client" ), tr( "Message sent!\n\n" ) );
-    ui->rcpt->clear();
-    ui->subject->clear();
-    ui->file->clear();
-    ui->msg->clear();
-    ui->mail_pass->clear();
+setupStyledDemo(ui->customPlot);
+ customPlot->replot()
 }

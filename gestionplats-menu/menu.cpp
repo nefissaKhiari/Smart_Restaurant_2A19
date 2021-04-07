@@ -6,11 +6,11 @@
 
 Menu::Menu()
 {
-    id=0;    nom="";   prix="";  description="";   id_plat=0;
+    id=0;    nom="";   prix="";  description="";
 }
 
-Menu::Menu( QString nom,QString prix,QString description,int id_plat) {
-      this->nom=nom;  this->prix=prix;  this->description=description;    this-> id_plat= id_plat;
+Menu::Menu( QString nom,QString prix,QString description) {
+      this->nom=nom;  this->prix=prix;  this->description=description;
 }
 
 int Menu::getId() {
@@ -44,22 +44,16 @@ QString Menu::getDescription() {
 void Menu::setDescription(QString description) {
     this->description=description;
 }
-int Menu::getIdplat() {
-    return id_plat;
-}
 
-void Menu::setIdplat(int id_plat) {
-    this->id_plat=id_plat;
-}
 bool Menu::ajouter1() {
     QSqlQuery query;
     QString id_string = QString::number(id);
-    QString idplat_string = QString::number(id_plat);
-    query.prepare("INSERT INTO menu ( nom,prix,description,id_plat)" "VALUES ( :nom, :prix,:description,:id_plat)");
+
+    query.prepare("INSERT INTO menu ( nom,prix,description)" "VALUES ( :nom, :prix,:description)");
     query.bindValue(0, nom);
       query.bindValue(1, prix);
        query.bindValue(2, description);
-         query.bindValue(3,idplat_string);
+
     return query.exec();
 }
 
@@ -110,3 +104,5 @@ QSqlQueryModel*Menu::afficherById1(int id) {
     query.bindValue(0, id_string);
     return model;
 }
+
+

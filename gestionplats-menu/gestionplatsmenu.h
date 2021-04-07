@@ -6,7 +6,8 @@
 #include <QFileDialog>
 #include <QDialog>
 #include <QMainWindow>
-
+#include<QObject>
+#include "qcustomplot.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Gestionplatsmenu; }
@@ -20,6 +21,7 @@ public:
     Gestionplatsmenu(QWidget *parent = nullptr);
     ~Gestionplatsmenu();
      void INFORMER(QLabel *label ,QString message, int duration);
+
 
 
 private slots:
@@ -39,32 +41,31 @@ private slots:
 
     void on_ListDeleteME_B_clicked();
 
-    void on_ajouterME_B_clicked();
+
 
     void on_ConfrimEditME_B_clicked();
 
     void on_bouton_imprimer_clicked();
 
-    void on_bouton_imprimer_2_clicked();
-
-
-
-    void on_boutonchercher_clicked();
-
-    void on_boutonafficher_clicked();
-
-
-    void on_trinom_clicked();
-
-    void on_triingredient_clicked();
-
-    void on_tricategorie_clicked();
 
 
 
 
 
-    void on_exporter_clicked();
+    void sendMail();
+
+    void mailSent(QString);
+
+    void browse();
+
+
+
+
+
+
+
+
+
 
     void on_exporter_2_clicked();
 
@@ -73,11 +74,44 @@ private slots:
 
 
 
+    void on_pushButton_3_clicked();
+
+    void on_exporterM_clicked();
+
+    void on_exporterXM_clicked();
+
+
+    void on_bouton_imprimer_3_clicked();
+
+
+
+    void on_pushButton_5_clicked();
+
+    void on_pushButton_6_clicked();
+
+    void on_bouton_imprimer_4_clicked();
+
+    void on_pushButton_clicked();
+
+    void on_pushButton_2_clicked();
+
+    void on_chercher_textChanged(const QString &arg1);
+
+    void on_trier_clicked();
+
+
+
+
+    void on_pushButton_8_clicked();
+
+
+
+    void on_pushButton_9_clicked();
 
 private:
     Ui::Gestionplatsmenu *ui;
      Plats P;
      Menu M;
-
+ QStringList files;
 };
 #endif // GESTIONPLATSMENU_H

@@ -8,35 +8,33 @@ class Plats
 
 private:
     int id;
-    QString nom, ingredient,categorie,prix;
+    int id_menu;
+    QString nom, categorie,prix,type;
 
 public:
     Plats();
-   Plats( QString, QString,QString,QString);
+   Plats( QString,QString,QString,QString,int);
     int getId();
     void setId(int);
     QString getNom();
     void setNom(QString);
-    QString getIngredient();
-    void setIngredient(QString);
+
     QString getCategorie();
     void setCategorie(QString);
     QString getPrix();
     void setPrix(QString);
+    QString getType();
+    void setType(QString);
+    int getId_menu();
+    void setId_menu(int);
     bool ajouter();
     bool supprimer(int);
     bool modifier();
-QSqlQueryModel * afficherRechId(int);
-    QSqlQueryModel * afficherTrinom();
-    QSqlQueryModel * afficherTriingredient();
-    QSqlQueryModel * afficherTricategorie();
+QSqlQueryModel* Trier(QString);
     QSqlQueryModel* afficher();
     QSqlQueryModel* afficherById(int);
     QSqlQueryModel* listId();
-    QSqlQueryModel * chercherplat(QString  nom);
-    QSqlQueryModel * chercherplat1(QString  ingredient);
-    QSqlQueryModel * chercherplat2(QString  categorie);
-    QSqlQueryModel * chercherplat3(QString  prix);
+ QSqlQueryModel* chercher(QString,QString);
 };
 
 

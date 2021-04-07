@@ -2,6 +2,7 @@
 #include <QSqlQuery>
 #include <QtDebug>
 #include <QVariant>
+#include <QSqlError>
 
 int EXCEL::export2Excel()
 {
@@ -18,11 +19,13 @@ int EXCEL::export2Excel()
         return -2;
     }
     // set the dsn string
-    QString dsn = QString("DRIVER={Microsoft Excel Driver (*.xls)};DSN='';FIRSTROWHASNAMES=1;READONLY=FALSE;CREATE_DB=\"%1\";DBQ=%2").
+    QString dsn = QString("DRIVER={Microsoft Excel Driver (*.xls, *.xlsx, *.xlsm, *.xlsb)}; DSN=''; FIRSTROWHASNAMES=1; READONLY=FALSE; CREATE_DB=\"%1\"; DBQ=%2").
                   arg(excelFilePath).arg(excelFilePath);
     db.setDatabaseName(dsn);
+    qDebug() << "dsn = " << dsn;
     if(!db.open())
     {
+        qDebug() << db.lastError();
         qDebug() << "ExportExcelObject::export2Excel failed: Create Excel file failed by DRIVER={Microsoft Excel Driver (*.xls)}.";
         QSqlDatabase::removeDatabase("Gestion_Ecole");
         return -3;

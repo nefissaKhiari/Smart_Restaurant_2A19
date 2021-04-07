@@ -1,7 +1,7 @@
 
 QT       += core gui sql network
 QT       += core gui printsupport
-   QT += core
+QT += core  network
 CONFIG +=
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -18,14 +18,16 @@ SOURCES += \
     main.cpp \
     gestionplatsmenu.cpp \
     menu.cpp \
-    plats.cpp
+    plats.cpp \
+    smtp.cpp
 
 HEADERS += \
     connection.h \
     excel.h \
     gestionplatsmenu.h \
     menu.h \
-    plats.h
+    plats.h \
+    smtp.h
 
 FORMS += \
     gestionplatsmenu.ui

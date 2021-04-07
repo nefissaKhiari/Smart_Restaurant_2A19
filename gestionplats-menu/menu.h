@@ -9,13 +9,13 @@ class Menu
 {
 
 private:
-    int id_plat;
+
     int id;
     QString nom,prix,description;
 
 public:
     Menu();
-  Menu( QString, QString,QString,int);
+  Menu( QString, QString,QString);
     int getId();
     void setId(int);
     QString getNom();
@@ -24,8 +24,7 @@ public:
     void setPrix(QString);
     QString getDescription();
     void setDescription(QString);
-    int getIdplat();
-    void setIdplat(int);
+
 
 
     bool ajouter1();

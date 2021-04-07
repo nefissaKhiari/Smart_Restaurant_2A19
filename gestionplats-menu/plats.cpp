@@ -8,11 +8,11 @@
 #include<QtPrintSupport/QPrintDialog>
 Plats::Plats()
 {
-    id=0;    nom="";    ingredient="" ,categorie="",prix="";
+    id=0;    nom="";    categorie="",prix="",type="", id_menu=0 ;
 }
 
-Plats::Plats( QString nom, QString ingredient,QString categorie,QString prix) {
-        this->nom=nom;    this->ingredient=ingredient; this->categorie=categorie ; this->prix=prix;
+Plats::Plats( QString nom,QString categorie,QString prix,QString type,int id_menu) {
+        this->nom=nom;     this->categorie=categorie ; this->prix=prix;  this->type=type;this-> id_menu= id_menu;
 }
 
 int Plats::getId() {
@@ -31,13 +31,9 @@ void Plats::setNom(QString nom) {
     this->nom=nom;
 }
 
-QString Plats::getIngredient() {
-    return  ingredient;
-}
 
-void Plats::setIngredient(QString ingredient) {
-    this->ingredient=ingredient;
-}
+
+
 QString Plats::getCategorie() {
     return  categorie;
 }
@@ -52,82 +48,46 @@ QString Plats::getPrix() {
 void Plats::setPrix(QString prix) {
     this->prix=prix;
 }
+QString Plats::getType() {
+    return type;
+}
+
+void Plats::setType(QString type) {
+    this->type=type;
+}
+int Plats::getId_menu() {
+    return id_menu;
+}
+
+void Plats::setId_menu(int id_menu) {
+    this->id_menu=id_menu;
+}
 
 bool Plats::ajouter() {
     QSqlQuery query;
+     QString idmenu_string = QString::number(id_menu);
     QString id_string = QString::number(id);
-    query.prepare("INSERT INTO plats ( nom, ingredient , categorie,prix)" "VALUES ( :nom, :ingredient,:categorie,:prix)");
+    query.prepare("INSERT INTO plats ( nom, categorie,prix,type,id_menu)" "VALUES ( :nom,:categorie,:prix,:type,:id_menu)");
 
     query.bindValue(0, nom);
-    query.bindValue(1, ingredient);
-     query.bindValue(2, categorie);
-      query.bindValue(3, prix);
+
+     query.bindValue(1, categorie);
+      query.bindValue(2, prix);
+      query.bindValue(3, type);
+       query.bindValue(4, id_menu);
+
     return query.exec();
 }
-QSqlQueryModel * Plats::chercherplat2(QString categorie)
- {
-    QSqlQueryModel *model = new QSqlQueryModel;
-            model->setQuery("SELECT * FROM plats WHERE categorie='"+categorie+"' ");
 
-            model->setHeaderData(0, Qt::Horizontal, QObject::tr("id"));
-            model->setHeaderData(1, Qt::Horizontal, QObject::tr("nom"));
-            model->setHeaderData(2, Qt::Horizontal, QObject::tr("ingredient"));
-            model->setHeaderData(3, Qt::Horizontal, QObject::tr("categorie"));
-            model->setHeaderData(4, Qt::Horizontal, QObject::tr("prix"));
-
-            return model ;
-
-
- }
-QSqlQueryModel *Plats:: chercherplat(QString  nom)
-
-
-    {
-        QSqlQueryModel *model = new QSqlQueryModel;
-        model->setQuery("SELECT * FROM plats WHERE nom='"+nom+"' ");
-        model->setHeaderData(0, Qt::Horizontal, QObject::tr("id"));
-        model->setHeaderData(1, Qt::Horizontal, QObject::tr("nom"));
-        model->setHeaderData(2, Qt::Horizontal, QObject::tr("ingredient"));
-        model->setHeaderData(3, Qt::Horizontal, QObject::tr("categorie"));
-        model->setHeaderData(4, Qt::Horizontal, QObject::tr("prix"));
-        return model ;
-    }
-
-
-
-QSqlQueryModel * Plats::chercherplat1(QString ingredient)
- {
-    QSqlQueryModel *model = new QSqlQueryModel;
-    model->setQuery("SELECT * FROM plats WHERE ingredient='"+ingredient+"' ");
-    model->setHeaderData(0, Qt::Horizontal, QObject::tr("id"));
-    model->setHeaderData(1, Qt::Horizontal, QObject::tr("nom"));
-    model->setHeaderData(2, Qt::Horizontal, QObject::tr("ingredient"));
-    model->setHeaderData(3, Qt::Horizontal, QObject::tr("categorie"));
-    model->setHeaderData(4, Qt::Horizontal, QObject::tr("prix"));
-    return model ;
-
-}
-QSqlQueryModel * Plats::chercherplat3(QString prix)
- {
-    QSqlQueryModel *model = new QSqlQueryModel;
-    model->setQuery("SELECT * FROM plats WHERE prix='"+prix+"' ");
-    model->setHeaderData(0, Qt::Horizontal, QObject::tr("id"));
-    model->setHeaderData(1, Qt::Horizontal, QObject::tr("nom"));
-    model->setHeaderData(2, Qt::Horizontal, QObject::tr("ingredient"));
-    model->setHeaderData(3, Qt::Horizontal, QObject::tr("categorie"));
-    model->setHeaderData(4, Qt::Horizontal, QObject::tr("prix"));
-    return model ;
-
-}
 
 QSqlQueryModel* Plats::afficher() {
     QSqlQueryModel* model = new QSqlQueryModel();
     model->setQuery("SELECT * FROM plats");
     model->setHeaderData(0, Qt::Horizontal, QObject::tr("Identifiant"));
     model->setHeaderData(1, Qt::Horizontal, QObject::tr("Nom"));
-    model->setHeaderData(2, Qt::Horizontal, QObject::tr("Ingredient"));
-    model->setHeaderData(3, Qt::Horizontal, QObject::tr("Categorie"));
-    model->setHeaderData(4, Qt::Horizontal, QObject::tr("Prix"));
+
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("Categorie"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("Prix"));
     return model;
 }
 
@@ -150,12 +110,13 @@ bool Plats::supprimer(int id) {
 bool Plats::modifier() {
     QSqlQuery query;
     QString id_string = QString::number(id);
-    query.prepare("UPDATE plats set nom=:nom, ingredient=:ingredient , categorie=:categorie, prix=:prix where id=:id");
-    query.bindValue(4, id_string);
+    query.prepare("UPDATE plats set nom=:nom,  categorie=:categorie, prix=:prix, type=:type,id_menu=:id_menu where id=:id");
+    query.bindValue(5, id_string);
     query.bindValue(0, nom);
-    query.bindValue(1, ingredient);
-    query.bindValue(2, categorie);
-    query.bindValue(3, prix);
+    query.bindValue(1, categorie);
+    query.bindValue(2, prix);
+       query.bindValue(3, type);
+       query.bindValue(4, id_menu);
     return query.exec();
 
 
@@ -172,48 +133,39 @@ QSqlQueryModel*Plats::afficherById(int id) {
 
 
 
-
-
-
-QSqlQueryModel * Plats::afficherTrinom(){
-    QSqlQueryModel * model = new QSqlQueryModel();
-    model->setQuery("SELECT * FROM plats ORDER BY nom");
-    model->setHeaderData(0,Qt::Horizontal,QObject::tr("id"));
-    model->setHeaderData(1,Qt::Horizontal,QObject::tr("nom"));
-    model->setHeaderData(2,Qt::Horizontal,QObject::tr("ingredient"));
-    model->setHeaderData(3,Qt::Horizontal,QObject::tr("categorie"));
-    model->setHeaderData(4,Qt::Horizontal,QObject::tr("prix"));
-
+QSqlQueryModel* Plats::chercher(QString chercher,QString by) {
+    QSqlQueryModel* model = new QSqlQueryModel();
+    if(by=="nom") {
+        model->setQuery("SELECT * FROM plats WHERE nom LIKE '"+chercher+"%'");
+    }
+    else if(by=="categorie") {
+       model->setQuery("SELECT * FROM plats WHERE  categorie LIKE '"+chercher+"%'");
+    }
 
     return model;
-
 }
- QSqlQueryModel * Plats::afficherTriingredient(){
-     QSqlQueryModel * model = new QSqlQueryModel();
-     model->setQuery("SELECT * FROM plats ORDER BY ingredient");
-     model->setHeaderData(0,Qt::Horizontal,QObject::tr("id"));
-     model->setHeaderData(1,Qt::Horizontal,QObject::tr("nom"));
-     model->setHeaderData(2,Qt::Horizontal,QObject::tr("ingredient"));
-     model->setHeaderData(3,Qt::Horizontal,QObject::tr("categorie"));
-     model->setHeaderData(4,Qt::Horizontal,QObject::tr("prix"));
+QSqlQueryModel* Plats::Trier(QString tri) {
+    QSqlQueryModel* model = new QSqlQueryModel();
+    if(tri=="nom") {
+        model->setQuery("SELECT * FROM plats ORDER BY nom");
+    }
+
+    else if(tri=="categorie") {
+        model->setQuery("SELECT * FROM plats ORDER BY categorie ");
+    }
+    else if(tri=="prix") {
+        model->setQuery("SELECT * FROM plats ORDER BY prix ");
+    }
+    else if(tri=="type") {
+        model->setQuery("SELECT * FROM plats ORDER BY type ");
+    }
+
+    return model;
+}
 
 
-     return model;
-
- }
- QSqlQueryModel * Plats::afficherTricategorie(){
-     QSqlQueryModel * model = new QSqlQueryModel();
-     model->setQuery("SELECT * FROM plats ORDER BY prix");
-     model->setHeaderData(0,Qt::Horizontal,QObject::tr("id"));
-     model->setHeaderData(1,Qt::Horizontal,QObject::tr("nom"));
-     model->setHeaderData(2,Qt::Horizontal,QObject::tr("ingredient"));
-     model->setHeaderData(3,Qt::Horizontal,QObject::tr("categorie"));
-     model->setHeaderData(4,Qt::Horizontal,QObject::tr("prix"));
 
 
-     return model;
-
- }
 
 
 
