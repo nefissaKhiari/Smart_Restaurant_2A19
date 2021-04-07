@@ -1,54 +1,92 @@
 #include "commande.h"
 
- Commande::Commande(int num,QString date,int idemploye,QString nomp)
+ Commande::Commande(int idemploye)
 {
-    this->num=num;
-    this->date=date;
+
+
     this->idemploye=idemploye;
-    this->nomp=nomp;
+
 }
 bool Commande::ajouter()
 {
     QSqlQuery query;
-    QString res = QString::number(num);
-    QString res2 = QString::number(idemploye);
+
+    query.prepare("insert into COMMANDES (IDEMPLOYE)" "values(:idemploye)");
+    query.bindValue(":idemploye",idemploye);
+    query.exec();
 
 
-    query.prepare("insert into COMMANDES (NUMC,DATEC,IDEMPLOYE)" "values(:num, :date, :idemploye)");
+return true;
+}
 
-    query.bindValue(":num",res);
-    query.bindValue(":date",date);
-    query.bindValue(":idemploye",res2);
+bool Commande::ajouterPlat(int platid, int qty){
+    QSqlQuery query;
+    QSqlQuery queryId("select max(numc) ID from COMMANDES;");
+          queryId.next();
+          this->idcommande = queryId.value(0).toString();
 
-    return query.exec();
+    query.prepare("begin insert into CommandePlat (Numc,Id_Plat, Qty) values (:numc, :idplat, :qty); exception when dup_val_on_index then update CommandePlat set    qty = qty + :qty where  Numc = :numc and Id_Plat = :idplat; commit; end;");
+     query.bindValue(":numc",this->idcommande);
+     query.bindValue(":idplat",platid);
+     query.bindValue(":qty",qty);
+     return query.exec();
+}
+
+bool Commande::ConfirmCom(){
+        QSqlQuery query;
+        QSqlQuery queryPrix("");
+          queryPrix.next();
 
 }
+
 bool Commande::SupprimerCommande(int Num)
  {
      QSqlQuery query;
+
      query.prepare("DELETE FROM COMMANDES WHERE NUMC=:NUM");
      query.bindValue(":NUM",Num);
+
      return query.exec();
  }
 QSqlQueryModel* Commande:: AfficherCommande()
  {
     QSqlQueryModel* model=new QSqlQueryModel();
-    model->setQuery("SELECT* FROM COMMANDEPLAT");
+    model->setQuery("SELECT* FROM COMMANDES");
          model->setHeaderData(0, Qt::Horizontal, QObject::tr("NUMC"));
+         model->setHeaderData(1, Qt::Horizontal, QObject::tr("IDEMPLOYE"));
+         model->setHeaderData(2, Qt::Horizontal, QObject::tr("DATEC"));
 
     return  model;
 
  }
-bool Commande::modifierCommande()
+bool Commande::modifierEmployer(int num)
 {
     QSqlQuery query;
-    query.prepare("UPDATE COMMANDES SET NUMC= :NUMC,IDEMPLOYE=:IDEMPLOYE,NOMP = :NOMP,DATEC = :DATEC WHERE NUMC=:NUMC");
+    query.prepare("UPDATE COMMANDES SET NUMC= :NUMC,IDEMPLOYE=:IDEMPLOYE WHERE NUMC=:NUMC");
+
     query.bindValue(":NUMC",num);
-    query.bindValue(":NOMP",nomp);
-    query.bindValue(":DATEC",date);
+
     query.bindValue(":IDEMPLOYE",idemploye);
 
-    return    query.exec();
+    return  query.exec();
 }
+bool Commande::modifierQTY(int num,int IDplat, int qty){
+    QSqlQuery query;
+query.prepare("UPDATE COMMANDEPLAT SET QTY= :QTY WHERE NUMC=:num and ID_PLAT=:IDplat");
+query.bindValue(":num",num);
+query.bindValue(":IDplat",IDplat);
+query.bindValue(":QTY",qty);
+return query.exec();
+}
+QSqlQueryModel* Commande:: AfficherPlat()
+ {
+    QSqlQueryModel* model=new QSqlQueryModel();
+    model->setQuery("SELECT* FROM PLATES");
+         model->setHeaderData(0, Qt::Horizontal, QObject::tr("ID Plat"));
+         model->setHeaderData(1, Qt::Horizontal, QObject::tr("Prix Plat"));
+         model->setHeaderData(2, Qt::Horizontal, QObject::tr("Nom Plat"));
 
+    return  model;
+
+ }
 

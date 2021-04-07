@@ -9,29 +9,29 @@
 
 class Commande
 {
-    int num, idemploye;
-    QString date,nomp;
-public:
+    int idemploye,qty;
+   public:
 
      Commande(){}
-     Commande(int , QString , int , QString );
+     Commande( int );
+
+     QString idcommande;
 
 
-     int getNum(){return num;}
-     QString getDate(){return date;}
      int getIdemploye(){return idemploye;}
-
-
-     void setNum(int num){this->num=num;}
-     void setDate(QString date){this->date=date;}
+     int getqty(){return qty;}
+     void setqty(int qty){this->qty=qty;}
      void setIdemploye(int idemploye){this->idemploye=idemploye;}
 
 
-
+     bool ajouterPlat(int platid, int qty);
      bool ajouter();
      bool SupprimerCommande(int);
      QSqlQueryModel* AfficherCommande();
-     bool modifierCommande();
+     QSqlQueryModel*AfficherPlat();
+     bool ConfirmCom();
+     bool modifierEmployer(int);
+     bool modifierQTY(int,int,int);
 
 };
 

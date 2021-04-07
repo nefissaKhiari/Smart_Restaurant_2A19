@@ -49,11 +49,24 @@ private slots:
     void on_Tab_pressed(QKeyEvent * event);
 
     void on_Tab_viewportEntered();
+    void UpdateTime();
+
+    void on_pushButton_5_clicked();
+
+    void on_food11c_3_valueChanged(const QString &arg1);
+
+    void on_btn_update_clicked();
+
+    void on_getid_clicked();
+
+    void on_UpdateQuantity_clicked();
 
 private:
     Ui::MainWindow *ui;
     Commande x;
     void showEventHelper();
+    QTimer *timer_1s;
+    void RefreshTables();
 };
 
 #endif // MAINWINDOW_H

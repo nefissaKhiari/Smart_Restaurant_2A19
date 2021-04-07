@@ -25,19 +25,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
-    ajouterplat.cpp \
     commande.cpp \
         main.cpp \
         mainwindow.cpp \
     connection.cpp \
-    plates.cpp
+    supplement.cpp
 
 HEADERS += \
-    ajouterplat.h \
     commande.h \
         mainwindow.h \
     connection.h \
-    plates.h
+    supplement.h
 
 FORMS += \
         ajouterplat.ui \

@@ -26,7 +26,7 @@
     <string notr="true">background-image: url(:/new/prefix1/folda/back.png);</string>
    </property>
    <property name="currentIndex">
-    <number>3</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -174,62 +174,117 @@ color :white;
       <normaloff>../../../../../Downloads/Final/E-Health_care_2A12-remote/folda/delete.PNG</normaloff>../../../../../Downloads/Final/E-Health_care_2A12-remote/folda/delete.PNG</iconset>
     </attribute>
     <attribute name="title">
-     <string>Supprimer Plats</string>
+     <string>Choisir plat</string>
     </attribute>
-    <widget class="QLabel" name="label_21">
+    <widget class="QLabel" name="label_couscous">
      <property name="geometry">
       <rect>
-       <x>60</x>
-       <y>140</y>
-       <width>121</width>
-       <height>16</height>
+       <x>0</x>
+       <y>0</y>
+       <width>221</width>
+       <height>121</height>
       </rect>
      </property>
      <property name="text">
-      <string>ID Plat</string>
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>lasagna.jpg</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
      </property>
     </widget>
-    <widget class="QLineEdit" name="IDP_SUP">
+    <widget class="QSpinBox" name="food11c_3">
      <property name="geometry">
       <rect>
-       <x>310</x>
-       <y>140</y>
-       <width>201</width>
-       <height>20</height>
+       <x>0</x>
+       <y>120</y>
+       <width>41</width>
+       <height>21</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial Rounded MT Bold</family>
+       <pointsize>10</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
      </property>
     </widget>
-    <widget class="QPushButton" name="Supprimer">
+    <widget class="QLabel" name="label_couscous_2">
      <property name="geometry">
       <rect>
-       <x>320</x>
-       <y>300</y>
-       <width>131</width>
-       <height>23</height>
+       <x>280</x>
+       <y>0</y>
+       <width>221</width>
+       <height>121</height>
       </rect>
-     </property>
-     <property name="statusTip">
-      <string extracomment="Cliquez pour supprimer"/>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton {
-background-color:#0094ff;
-font: 8pt &quot;MS Shell Dlg 2&quot;;
-
-}
-QPushButton:hover
-{background-color: rgb(70, 144, 255);
-color :white;
-
-
-}</string>
      </property>
      <property name="text">
-      <string>Supprimer Plat</string>
+      <string/>
      </property>
-     <property name="icon">
-      <iconset>
-       <normaloff>../../../../../Downloads/Final/E-Health_care_2A12-remote/folda/delete.PNG</normaloff>../../../../../Downloads/Final/E-Health_care_2A12-remote/folda/delete.PNG</iconset>
+     <property name="pixmap">
+      <pixmap>lasagna.jpg</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="food11c_4">
+     <property name="geometry">
+      <rect>
+       <x>280</x>
+       <y>120</y>
+       <width>41</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial Rounded MT Bold</family>
+       <pointsize>10</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_couscous_3">
+     <property name="geometry">
+      <rect>
+       <x>550</x>
+       <y>0</y>
+       <width>221</width>
+       <height>121</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>lasagna.jpg</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="food11c_5">
+     <property name="geometry">
+      <rect>
+       <x>550</x>
+       <y>120</y>
+       <width>41</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial Rounded MT Bold</family>
+       <pointsize>10</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
      </property>
     </widget>
    </widget>
