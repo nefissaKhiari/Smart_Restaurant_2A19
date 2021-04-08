@@ -66,10 +66,10 @@ bool Commande::modifierEmployer(int num)
 }
 bool Commande::modifierQTY(int num,int IDplat, int qty){
     QSqlQuery query;
-query.prepare("UPDATE COMMANDEPLAT SET QTY= :QTY WHERE NUMC=:num and ID_PLAT=:IDplat");
-query.bindValue(":num",num);
-query.bindValue(":IDplat",IDplat);
-query.bindValue(":QTY",qty);
+query.prepare("begin insert into COMMANDEPLAT (Numc,Id_Plat, Qty) values (:numc, :idplat, :qty); exception when dup_val_on_index then update CommandePlat set    qty =:qty where  Numc = :numc and Id_Plat = :idplat; commit; end;");
+query.bindValue(":numc",num);
+query.bindValue(":idplat",IDplat);
+query.bindValue(":qty",qty);
 return query.exec();
 }
 QSqlQueryModel* Commande:: AfficherPlat()
@@ -77,10 +77,20 @@ QSqlQueryModel* Commande:: AfficherPlat()
     QSqlQueryModel* model=new QSqlQueryModel();
     model->setQuery("SELECT* FROM PLATES");
          model->setHeaderData(0, Qt::Horizontal, QObject::tr("ID Plat"));
-         model->setHeaderData(1, Qt::Horizontal, QObject::tr("Prix Plat"));
-         model->setHeaderData(2, Qt::Horizontal, QObject::tr("Nom Plat"));
+         model->setHeaderData(1, Qt::Horizontal, QObject::tr("Nom Plat"));
+         model->setHeaderData(2, Qt::Horizontal, QObject::tr("Prix Plat"));
 
     return  model;
 
  }
+QSqlQueryModel * Commande::chercherCom(QString search)
+{
+
+    QSqlQueryModel * model= new QSqlQueryModel();
+    QString qry="select * from commandes where numc like '%"+search+"%' or idemploye like '%"+search+"%' or to_char(datec,'DD/MM/YYYY HH:MM AM') like '%"+search+"%' or PRIXtot like '%"+search+"%' ";
+    qDebug()<<qry;
+
+    model->setQuery(qry);
+    return model;
+}
 

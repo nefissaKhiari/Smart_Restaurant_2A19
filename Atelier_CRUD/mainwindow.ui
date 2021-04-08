@@ -34,32 +34,32 @@
     <property name="currentIndex">
      <number>1</number>
     </property>
-    <widget class="QWidget" name="tab">
+    <widget class="QWidget" name="tab_7">
      <attribute name="title">
-      <string>Page</string>
+      <string>Ajouter commande</string>
      </attribute>
-     <widget class="QTableView" name="Tab3_2">
+     <widget class="QTableView" name="Tab">
       <property name="geometry">
        <rect>
-        <x>190</x>
-        <y>50</y>
-        <width>371</width>
-        <height>191</height>
+        <x>180</x>
+        <y>80</y>
+        <width>441</width>
+        <height>231</height>
        </rect>
       </property>
      </widget>
-     <widget class="QWidget" name="gridLayoutWidget_2">
+     <widget class="QWidget" name="gridLayoutWidget">
       <property name="geometry">
        <rect>
-        <x>560</x>
-        <y>50</y>
-        <width>77</width>
-        <height>31</height>
+        <x>260</x>
+        <y>320</y>
+        <width>271</width>
+        <height>41</height>
        </rect>
       </property>
-      <layout class="QGridLayout" name="gridLayout_7">
+      <layout class="QGridLayout" name="gridLayout">
        <item row="0" column="0">
-        <widget class="QPushButton" name="Delete_sup">
+        <widget class="QPushButton" name="Supprimer">
          <property name="statusTip">
           <string extracomment="Cliquez pour supprimer"/>
          </property>
@@ -77,7 +77,7 @@ color :white;
 }</string>
          </property>
          <property name="text">
-          <string>DELETE</string>
+          <string>Supprimer Commande N°:</string>
          </property>
          <property name="icon">
           <iconset>
@@ -86,6 +86,142 @@ color :white;
         </widget>
        </item>
       </layout>
+     </widget>
+     <widget class="QWidget" name="layoutWidget_2">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>141</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_4">
+       <item row="0" column="3">
+        <widget class="QLabel" name="lbl_time_2">
+         <property name="text">
+          <string>00:00:00</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <spacer name="horizontalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="4">
+        <spacer name="horizontalSpacer_5">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>Current Time:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <spacer name="horizontalSpacer_6">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="layoutWidget_3">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>60</y>
+        <width>441</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_8">
+       <item>
+        <widget class="QLabel" name="label_14">
+         <property name="text">
+          <string>Chercher</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="serchcom"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>170</y>
+        <width>141</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <item>
+          <widget class="QLabel" name="label_12">
+           <property name="text">
+            <string>Entrer Votre ID:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="ID_Employe"/>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_5">
+         <property name="text">
+          <string>Nouvelle Commande</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab">
+     <attribute name="title">
+      <string>Page</string>
+     </attribute>
+     <widget class="QWidget" name="gridLayoutWidget_2">
+      <property name="geometry">
+       <rect>
+        <x>560</x>
+        <y>50</y>
+        <width>77</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_7"/>
      </widget>
      <widget class="QWidget" name="layoutWidget_5">
       <property name="geometry">
@@ -156,153 +292,36 @@ color :white;
       <property name="geometry">
        <rect>
         <x>160</x>
-        <y>260</y>
-        <width>418</width>
-        <height>134</height>
+        <y>20</y>
+        <width>558</width>
+        <height>366</height>
        </rect>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_5">
+      <layout class="QVBoxLayout" name="verticalLayout_4">
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout">
+        <layout class="QHBoxLayout" name="horizontalLayout_7">
          <item>
-          <layout class="QGridLayout" name="gridLayout_9">
-           <item row="1" column="1">
-            <widget class="QLineEdit" name="lineEdit_Type_supp"/>
-           </item>
-           <item row="0" column="0">
-            <widget class="QLabel" name="label">
-             <property name="text">
-              <string>Nom supplement:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="label_5">
-             <property name="text">
-              <string>Prix supplement:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QLineEdit" name="lineEdit_nom_supp"/>
-           </item>
-           <item row="2" column="1">
-            <widget class="QLineEdit" name="lineEdit_prix_supp"/>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="label_4">
-             <property name="text">
-              <string>Type supplement:</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <widget class="QPushButton" name="ADD_supp">
-           <property name="styleSheet">
-            <string notr="true">QPushButton {
-background-color:#0094ff;
-font: 8pt &quot;MS Shell Dlg 2&quot;;
-
-}
-QPushButton:hover
-{background-color: rgb(70, 144, 255);
-color :white;
-
-
-}</string>
-           </property>
+          <widget class="QLabel" name="label_13">
            <property name="text">
-            <string>ADD</string>
-           </property>
-           <property name="icon">
-            <iconset>
-             <normaloff>../../../../../Downloads/Final/E-Health_care_2A12-remote/folda/add.PNG</normaloff>../../../../../Downloads/Final/E-Health_care_2A12-remote/folda/add.PNG</iconset>
+            <string>Chercher</string>
            </property>
           </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="serchsup"/>
          </item>
         </layout>
        </item>
        <item>
-        <spacer name="horizontalSpacer_8">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
+        <widget class="QTableView" name="Tab3_2"/>
        </item>
        <item>
-        <spacer name="horizontalSpacer_9">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
+        <widget class="QPushButton" name="Delete_sup">
+         <property name="statusTip">
+          <string extracomment="Cliquez pour supprimer"/>
          </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_7">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_2">
-         <item>
-          <layout class="QGridLayout" name="gridLayout_6">
-           <item row="2" column="1">
-            <widget class="QLineEdit" name="lineEdit_prix_sup"/>
-           </item>
-           <item row="0" column="0">
-            <widget class="QLabel" name="label_6">
-             <property name="text">
-              <string>Modifier Nom:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="label_8">
-             <property name="text">
-              <string>Modifier Type:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="label_10">
-             <property name="text">
-              <string>Modifier Prix:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QLineEdit" name="lineEdit_type_sup"/>
-           </item>
-           <item row="0" column="1">
-            <widget class="QLineEdit" name="lineEdit_nom_sup"/>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <widget class="QPushButton" name="Modifier_Nom_sup">
-           <property name="styleSheet">
-            <string notr="true">QPushButton {
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
 background-color:#0094ff;
 font: 8pt &quot;MS Shell Dlg 2&quot;;
 
@@ -313,15 +332,180 @@ color :white;
 
 
 }</string>
+         </property>
+         <property name="text">
+          <string>DELETE</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>../../../../../Downloads/Final/E-Health_care_2A12-remote/folda/delete.PNG</normaloff>../../../../../Downloads/Final/E-Health_care_2A12-remote/folda/delete.PNG</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <item>
+            <layout class="QGridLayout" name="gridLayout_9">
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="lineEdit_Type_supp"/>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label">
+               <property name="text">
+                <string>Nom supplement:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_5">
+               <property name="text">
+                <string>Prix supplement:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QLineEdit" name="lineEdit_nom_supp"/>
+             </item>
+             <item row="2" column="1">
+              <widget class="QLineEdit" name="lineEdit_prix_supp"/>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_4">
+               <property name="text">
+                <string>Type supplement:</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QPushButton" name="ADD_supp">
+             <property name="styleSheet">
+              <string notr="true">QPushButton {
+background-color:#0094ff;
+font: 8pt &quot;MS Shell Dlg 2&quot;;
+
+}
+QPushButton:hover
+{background-color: rgb(70, 144, 255);
+color :white;
+
+
+}</string>
+             </property>
+             <property name="text">
+              <string>ADD</string>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>../../../../../Downloads/Final/E-Health_care_2A12-remote/folda/add.PNG</normaloff>../../../../../Downloads/Final/E-Health_care_2A12-remote/folda/add.PNG</iconset>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_8">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
            </property>
-           <property name="text">
-            <string>Modifier Nom</string>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
            </property>
-           <property name="icon">
-            <iconset>
-             <normaloff>../../../../../Downloads/Final/E-Health_care_2A12-remote/folda/add.PNG</normaloff>../../../../../Downloads/Final/E-Health_care_2A12-remote/folda/add.PNG</iconset>
+          </spacer>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_9">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
            </property>
-          </widget>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_7">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <layout class="QGridLayout" name="gridLayout_6">
+             <item row="2" column="1">
+              <widget class="QLineEdit" name="lineEdit_prix_sup"/>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_6">
+               <property name="text">
+                <string>Modifier Nom:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_8">
+               <property name="text">
+                <string>Modifier Type:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_10">
+               <property name="text">
+                <string>Modifier Prix:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="lineEdit_type_sup"/>
+             </item>
+             <item row="0" column="1">
+              <widget class="QLineEdit" name="lineEdit_nom_sup"/>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QPushButton" name="Modifier_Nom_sup">
+             <property name="styleSheet">
+              <string notr="true">QPushButton {
+background-color:#0094ff;
+font: 8pt &quot;MS Shell Dlg 2&quot;;
+
+}
+QPushButton:hover
+{background-color: rgb(70, 144, 255);
+color :white;
+
+
+}</string>
+             </property>
+             <property name="text">
+              <string>Modifier Nom</string>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>../../../../../Downloads/Final/E-Health_care_2A12-remote/folda/add.PNG</normaloff>../../../../../Downloads/Final/E-Health_care_2A12-remote/folda/add.PNG</iconset>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
         </layout>
        </item>
@@ -509,7 +693,7 @@ color :white;
        <item>
         <widget class="QPushButton" name="UpdateQuantity_2">
          <property name="text">
-          <string>UPDATE QTY</string>
+          <string>Modifer Quantite Suplment</string>
          </property>
         </widget>
        </item>
@@ -553,7 +737,7 @@ color :white;
          <item row="1" column="0">
           <widget class="QPushButton" name="UpdateQuantity">
            <property name="text">
-            <string>UPDATE QTY</string>
+            <string>Modifier Quantite plat</string>
            </property>
           </widget>
          </item>
@@ -604,138 +788,6 @@ color :white;
        </item>
        <item>
         <widget class="QLineEdit" name="qtysupp"/>
-       </item>
-      </layout>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="tab_7">
-     <attribute name="title">
-      <string>Ajouter commande</string>
-     </attribute>
-     <widget class="QTableView" name="Tab">
-      <property name="geometry">
-       <rect>
-        <x>180</x>
-        <y>80</y>
-        <width>441</width>
-        <height>231</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="pushButton_5">
-      <property name="geometry">
-       <rect>
-        <x>330</x>
-        <y>50</y>
-        <width>131</width>
-        <height>23</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Nouvelle Commande</string>
-      </property>
-     </widget>
-     <widget class="QWidget" name="gridLayoutWidget">
-      <property name="geometry">
-       <rect>
-        <x>260</x>
-        <y>320</y>
-        <width>271</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
-        <widget class="QPushButton" name="Supprimer">
-         <property name="statusTip">
-          <string extracomment="Cliquez pour supprimer"/>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-background-color:#0094ff;
-font: 8pt &quot;MS Shell Dlg 2&quot;;
-
-}
-QPushButton:hover
-{background-color: rgb(70, 144, 255);
-color :white;
-
-
-}</string>
-         </property>
-         <property name="text">
-          <string>Supprimer Commande N°:</string>
-         </property>
-         <property name="icon">
-          <iconset>
-           <normaloff>../../../../../Downloads/Final/E-Health_care_2A12-remote/folda/delete.PNG</normaloff>../../../../../Downloads/Final/E-Health_care_2A12-remote/folda/delete.PNG</iconset>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="layoutWidget_2">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>141</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_4">
-       <item row="0" column="3">
-        <widget class="QLabel" name="lbl_time_2">
-         <property name="text">
-          <string>00:00:00</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="2">
-        <spacer name="horizontalSpacer_4">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="0" column="4">
-        <spacer name="horizontalSpacer_5">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLabel" name="label_3">
-         <property name="text">
-          <string>Current Time:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <spacer name="horizontalSpacer_6">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
        </item>
       </layout>
      </widget>

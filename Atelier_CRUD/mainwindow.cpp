@@ -28,6 +28,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(timer_1s, SIGNAL(timeout()), this, SLOT(UpdateTime()));
     timer_1s->start(1000);
 
+
 }
 
 MainWindow::~MainWindow()
@@ -42,13 +43,15 @@ void MainWindow::UpdateTime()
     ui->lbl_time_2->setText(QTime::currentTime().toString("hh:mm:ss"));
     ui->lbl_time_3->setText(QTime::currentTime().toString("hh:mm:ss"));
 
+
 }
 void MainWindow::on_pushButton_5_clicked()
 {
 
 
+    int idp=ui->ID_Employe->text().toInt();
 
-    Commande c;
+    Commande c(idp);
 
     bool test=c.ajouter();
     if (test)
@@ -135,6 +138,90 @@ void MainWindow::RefreshTables(){
     ui->Tab2->setModel(x.AfficherPlat());
     ui->Tab3_2->setModel(t.AfficherSupplement());
     ui->Tab3->setModel(t.AfficherSupplement());
+
+
+    /**********tri_tab_com*************/
+            QSqlQueryModel * myModel1=new QSqlQueryModel(ui->Tab);
+            QSqlQuery select2;
+            if (!select2.exec("select * from COMMANDES")) {
+                QMessageBox msg;
+                msg.setText("sorted");
+
+                msg.setIcon(msg.Critical);
+                msg.exec();
+            }
+            else {
+                myModel1->setQuery(select2);
+                QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(myModel1); // create proxy
+                proxyModel->setSourceModel(myModel1);
+                ui->Tab->setSortingEnabled(true); // enable sortingEnabled
+                ui->Tab->setModel(proxyModel);
+            }
+
+    /**********tri_tab_com*************/
+            /**********tri_tab_plates*************/
+                    QSqlQueryModel * myModel2=new QSqlQueryModel(ui->Tab2);
+                    QSqlQuery select1;
+                    if (!select1.exec("select * from PLATES")) {
+                        QMessageBox msg;
+                        msg.setText("Not sorted");
+
+                        msg.setIcon(msg.Critical);
+                        msg.exec();
+                    }
+                    else {
+
+                        myModel2->setQuery(select1);
+                        QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(myModel2); // create proxy
+                        proxyModel->setSourceModel(myModel2);
+                        ui->Tab2->setSortingEnabled(true); // enable sortingEnabled
+                        ui->Tab2->setModel(proxyModel);
+                    }
+
+            /**********tri_tab_plates*************/
+
+/**********tri_tab_sup*************/
+        QSqlQueryModel * myModel7=new QSqlQueryModel(ui->Tab3_2);
+        QSqlQuery select7;
+        if (!select7.exec("select * from SUPPLEMENT")) {
+            QMessageBox msg;
+            msg.setText("sorted");
+
+            msg.setIcon(msg.Critical);
+            msg.exec();
+        }
+        else {
+            myModel7->setQuery(select7);
+            QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(myModel7); // create proxy
+            proxyModel->setSourceModel(myModel7);
+            ui->Tab3_2->setSortingEnabled(true); // enable sortingEnabled
+            ui->Tab3_2->setModel(proxyModel);
+        }
+
+/**********tri_tab_sup*************/
+
+
+
+        /**********tri_tab_sup2*************/
+                QSqlQueryModel * myModel9=new QSqlQueryModel(ui->Tab3);
+                QSqlQuery select9;
+                if (!select9.exec("select * from SUPPLEMENT")) {
+                    QMessageBox msg;
+                    msg.setText("sorted");
+
+                    msg.setIcon(msg.Critical);
+                    msg.exec();
+                }
+                else {
+                    myModel9->setQuery(select9);
+                    QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(myModel9); // create proxy
+                    proxyModel->setSourceModel(myModel9);
+                    ui->Tab3->setSortingEnabled(true); // enable sortingEnabled
+                    ui->Tab3->setModel(proxyModel);
+                }
+
+        /**********tri_tab_sup2*************/
+
     ui->Tab3->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->Tab3_2->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->Tab->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -145,8 +232,10 @@ void MainWindow::RefreshTables(){
     ui->NUMCmodif->setModel(model);
     ui->IDSmodif->setModel(model);
     /*******************************************/
+
     QTableView * view = new QTableView();
     view->verticalHeader()->hide();
+
 }
 void MainWindow::showEventHelper()
 {
@@ -165,8 +254,7 @@ void MainWindow::on_getid_clicked()
          return;
     }
     QString IdPlat=select->selectedRows().at(0).data().toString();
-    msg.setText(IdPlat);
-    msg.exec();
+
     int qty=ui->qtyplat->text().toInt();
     int platid = QString (IdPlat).toInt();
     Commande c;
@@ -197,8 +285,7 @@ void MainWindow::on_UpdateQuantity_clicked()
          return;
     }
     QString IDplat=select->selectedRows().at(0).data().toString();
-    msg.setText(IDplat);
-    msg.exec();
+
     int qty=ui->lineEdit_QTY->text().toInt();
     int num=ui->NUMCmodif->currentText().toInt();
     int platid = QString (IDplat).toInt();
@@ -236,7 +323,7 @@ void MainWindow::on_ADD_supp_clicked()
         QMessageBox::critical(nullptr, QObject::tr("Not OK"),
                               QObject::tr("Ajout non effectué.\n"
                                           "click Cancel to exit."),QMessageBox::Cancel);
-this->RefreshTables();
+    this->RefreshTables();
 }
 
 void MainWindow::on_Delete_sup_clicked()
@@ -367,4 +454,20 @@ void MainWindow::on_UpdateQuantity_2_clicked()
                                           "click Cancel to exit."),QMessageBox::Cancel);
 this->RefreshTables();
 
+}
+
+
+void MainWindow::on_serchsup_textEdited(const QString &arg1)
+{
+
+    ui->Tab3_2->setModel(t.chercher(ui->serchsup->text()));
+}
+
+
+
+
+
+void MainWindow::on_serchcom_textEdited(const QString &arg1)
+{
+    ui->Tab->setModel(x.chercherCom(ui->serchcom->text()));
 }

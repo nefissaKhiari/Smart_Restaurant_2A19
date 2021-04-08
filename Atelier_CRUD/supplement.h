@@ -12,6 +12,7 @@ class supplement
 {
     QString nomsup,typesup;
     int prixsup;
+
 public:
     supplement(){}
     supplement(QString,QString,int);
@@ -37,6 +38,9 @@ public:
 
     bool modifierSupplement(int);
     bool modifierQTYsup(int,int , int);
+      QSqlQueryModel* tri();
+      QSqlQueryModel* chercher(QString);
+
 };
 
 #endif // SUPPLEMENT_H

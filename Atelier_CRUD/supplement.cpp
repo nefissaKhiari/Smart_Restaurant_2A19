@@ -67,9 +67,30 @@ bool supplement::AjouterSuppcom(int idsup, int qtysup){
 
 bool supplement::modifierQTYsup(int num,int idsup, int qty){
     QSqlQuery query;
-query.prepare("UPDATE SUPPCOM SET QTY= :QTY WHERE NUMC=:num and IDS=:idsup");
-query.bindValue(":num",num);
+query.prepare("begin insert into SUPPCOM (NUMC,IDS, QTY) values (:numc, :idsup, :qty); exception when dup_val_on_index then update SUPPCOM set    qty = :qty where  NUMC = :numc and IDS = :idsup; commit; end;");
+query.bindValue(":numc",num);
 query.bindValue(":idsup",idsup);
-query.bindValue(":QTY",qty);
+query.bindValue(":qty",qty);
 return query.exec();
+}
+QSqlQueryModel* supplement::tri()
+{
+    QSqlQueryModel* model=new QSqlQueryModel();
+          model->setQuery("SELECT * FROM SUPPLEMENT ORDER BY PRIX");
+          model->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
+          model->setHeaderData(1, Qt::Horizontal, QObject::tr("NOM "));
+          model->setHeaderData(2, Qt::Horizontal, QObject::tr("PRIX"));
+          model->setHeaderData(3, Qt::Horizontal, QObject::tr("TYPE"));
+
+    return model;
+}
+QSqlQueryModel * supplement::chercher(QString search)
+{
+
+    QSqlQueryModel * model= new QSqlQueryModel();
+    QString qry="select * from supplement where IDS like '%"+search+"%' or NOM like '%"+search+"%' or TYPE like '%"+search+"%' or PRIX like '%"+search+"%' ";
+    qDebug()<<qry;
+
+    model->setQuery(qry);
+    return model;
 }
