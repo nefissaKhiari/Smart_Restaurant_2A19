@@ -18,7 +18,7 @@
 #include <QDebug>
 #include <QtPrintSupport/QPrintDialog>
 #include<QtPrintSupport/QPrinter>
-
+#include "notifications.h"
 
 
 
@@ -37,6 +37,7 @@ Gestionplatsmenu::Gestionplatsmenu(QWidget *parent)
     QTabBar *tabBar = ui->tabWidget_2->findChild<QTabBar *>();
     tabBar->hide();
     ui->idmenu->setModel(M.listId1());
+     ui->idmenu_2->setModel(M.listId1());
 
     // BEGIN : Afiichage list id
     ui->idList_CB->setModel(P.listId());
@@ -64,6 +65,10 @@ Gestionplatsmenu::Gestionplatsmenu(QWidget *parent)
     QSqlQuery qry;
     connect(ui->sendBtn, SIGNAL(clicked()),this, SLOT(sendMail()));
     connect(ui->browseBtn, SIGNAL(clicked()), this, SLOT(browse()));
+
+    player = new QMediaPlayer(this);
+    connect(player, &QMediaPlayer::positionChanged, this,&Gestionplatsmenu::on_positionChanged );
+        connect(player, &QMediaPlayer::durationChanged, this,&Gestionplatsmenu::on_durationChanged );
 
 
 }
@@ -101,24 +106,64 @@ void Gestionplatsmenu::INFORMER(QLabel *label, QString message, int duration){
 
 void Gestionplatsmenu::on_ajouter_B_clicked()
 {
+    bool overAll = false, nom_B, categorie_B, prix_B;
 int id_menu= ui->idmenu->currentText().toInt();
     QString nom = ui->nom_LE->text();
 
     QString categorie = ui->categorie_LE->text();
     QString prix = ui->prix_LE->text();
      QString type = ui->type->currentText();
+     if(nom.length() < 3) {
+                   nom_B = false;
+                    ui->nomcs->setText("Il faut  au moins 3 charactere ");
+                    ui->nomcs->setStyleSheet("QLabel{color: red; font-size: 12px;}");
+                }
+                else {
+                    nom_B = true;
+                   nom[0] = nom[0].toUpper();
+                    ui->nomcs->setText("Ok");
+                    ui->nomcs->setStyleSheet("QLabel{color: green; font-size: 12px;}");
+                }
+     if(prix.length() <1) {
+                   prix_B = false;
+                    ui->prixcs->setText("Il faut  maximum1 charactere ");
+                    ui->prixcs->setStyleSheet("QLabel{color: red; font-size: 12px;}");
+                }
+                else {
+                    prix_B = true;
+                   prix[0] = prix[0].toUpper();
+                    ui->prixcs->setText("Ok");
+                    ui->prixcs->setStyleSheet("QLabel{color: green; font-size: 12px;}");
+                }
+     if(categorie.length() >2) {
+                   categorie_B = false;
+                    ui->categoriecs->setText("Il faut  au moins depasse pas 2 charactere ");
+                    ui->categoriecs->setStyleSheet("QLabel{color: red; font-size: 12px;}");
+                }
+                else {
+                    categorie_B = true;
+                   categorie[0] = categorie[0].toUpper();
+                    ui->categoriecs->setText("Ok");
+                    ui->categoriecs->setStyleSheet("QLabel{color: green; font-size: 12px;}");
+                }
+     (nom_B && prix_B && categorie_B)? overAll = true : overAll = false;
+                if(overAll) {
     Plats P( nom, categorie,prix,type,id_menu );
+
     bool test = P.ajouter();
     if (test)
 
     {
         ui->plat_tab->setModel(P.afficher()) ;
+        Notifications N;
+         N.notifications_ajouterplat();
         INFORMER(ui->labelmessage," PlAT AJOUTE AVEC SUCCES ",3000);
     }
     else
 
     {INFORMER(ui->labelmessage,"PlAT NON AJOUTE ",3000);
     }
+                }
   }
 void Gestionplatsmenu::on_ListDelete_B_clicked()
 {
@@ -129,6 +174,8 @@ void Gestionplatsmenu::on_ListDelete_B_clicked()
 
     {
         ui->plat_tab->setModel(P.afficher()) ;
+        Notifications N;
+         N.notifications_supprimerplat();
         INFORMER(ui->labelmessage," PlAT Supprimmer AVEC SUCCES ",3000);
     }
     else
@@ -140,19 +187,22 @@ void Gestionplatsmenu::on_ListDelete_B_clicked()
 void Gestionplatsmenu::on_ConfrimEdit_B_clicked()
 {
     Plats P1;
- P1.setId(ui->idList_CB->currentText().toInt());
-    P1.setNom(ui->nom_LE->text());
 
-     P1.setCategorie(ui->categorie_LE->text());
-      P1.setPrix(ui->prix_LE->text());
-      P1.setType(ui->type->currentText());
-      P1.setId_menu(ui->idmenu->currentText().toInt());
+ P1.setId(ui->idList_CB->currentText().toInt());
+    P1.setNom(ui->nom_LE_2->text());
+
+     P1.setCategorie(ui->categorie_LE_2->text());
+      P1.setPrix(ui->prix_LE_2->text());
+      P1.setType(ui->type_2->currentText());
+      P1.setId_menu(ui->idmenu_2->currentText().toInt());
       qDebug() << P1.getType();
       bool test=P1.modifier();
 
       if(test)
       {
          ui->plat_tab->setModel(P.afficher()) ;
+         Notifications N;
+          N.notifications_modifierplat();
           INFORMER(ui->labelmessage,"MODIFICATION APPLIQUE ",3000);
 
       }
@@ -160,7 +210,7 @@ void Gestionplatsmenu::on_ConfrimEdit_B_clicked()
       {
             INFORMER(ui->labelmessage,"MODIFICATION  non APPLIQUE ",3000);
       }
-
+  ui->tabWidget_2->setCurrentIndex(1);
 }
 
 void Gestionplatsmenu::on_ListEdit_B_clicked()
@@ -172,15 +222,15 @@ void Gestionplatsmenu::on_ListEdit_B_clicked()
     if(qry.exec()) {
         while(qry.next()) {
 
-            ui->nom_LE->setText(qry.value(1).toString());
+            ui->nom_LE_2->setText(qry.value(1).toString());
 
-            ui->categorie_LE->setText(qry.value(2).toString());
-            ui->prix_LE->setText(qry.value(3).toString());
-               ui->type->setCurrentText(qry.value(4).toString());
-               ui->idmenu->setCurrentText(qry.value(5).toString());
+            ui->categorie_LE_2->setText(qry.value(2).toString());
+            ui->prix_LE_2->setText(qry.value(3).toString());
+               ui->type_2->setCurrentText(qry.value(4).toString());
+               ui->idmenu_2->setCurrentText(qry.value(5).toString());
         }
     }
-    ui->tabWidget->setCurrentIndex(1);
+    ui->tabWidget_2->setCurrentIndex(2);
 }
 
 void Gestionplatsmenu::on_ListEditME_B_clicked()
@@ -192,13 +242,13 @@ void Gestionplatsmenu::on_ListEditME_B_clicked()
     if(qry.exec()) {
         while(qry.next()) {
 
-            ui->nomME_LE->setText(qry.value(1).toString());
-            ui->prixME_LE->setText(qry.value(2).toString());
-              ui->descME_LE->setText(qry.value(3).toString());
+            ui->nomME_LE_2->setText(qry.value(1).toString());
+            ui->prixME_LE_2->setText(qry.value(2).toString());
+              ui->descME_LE_2->setText(qry.value(3).toString());
 
         }
     }
-    ui->tabWidget->setCurrentIndex(1);
+    ui->tabWidget_2->setCurrentIndex(4);
 }
 
 void Gestionplatsmenu::on_ListDeleteME_B_clicked()
@@ -229,20 +279,23 @@ void Gestionplatsmenu::on_ConfrimEditME_B_clicked()
 {
     Menu M1 ;
     M1.setId(ui->idListME_CB->currentText().toInt());
-    M1.setNom(ui->nomME_LE->text());
-      M1.setPrix(ui->prixME_LE->text());
-      M1.setDescription(ui->descME_LE->text());
+    M1.setNom(ui->nomME_LE_2->text());
+      M1.setPrix(ui->prixME_LE_2->text());
+      M1.setDescription(ui->descME_LE_2->text());
       bool test = M1.modifier1();
       if (test)
 
       {
           ui->menu_tab->setModel(M.afficher1()) ;
+          Notifications N;
+           N.notifications_modifiermenu();
           INFORMER(ui->labelmessage2," menu modifier AVEC SUCCES ",3000);
       }
       else
 
       {INFORMER(ui->labelmessage2,"menu NON AJOUTE ",3000);
       }
+       ui->tabWidget_2->setCurrentIndex(3);
 }
 
 void Gestionplatsmenu::on_bouton_imprimer_clicked()
@@ -451,7 +504,7 @@ void Gestionplatsmenu::on_exporterXM_clicked()
 
 void Gestionplatsmenu::on_bouton_imprimer_3_clicked()
 {
-    ui->tabWidget_2->setCurrentIndex(3);
+    ui->tabWidget_2->setCurrentIndex(5);
 }
 
 
@@ -459,7 +512,7 @@ void Gestionplatsmenu::on_bouton_imprimer_3_clicked()
 
 void Gestionplatsmenu::on_pushButton_5_clicked()
 {
-     ui->tabWidget_2->setCurrentIndex(2);
+     ui->tabWidget_2->setCurrentIndex(3);
 }
 
 void Gestionplatsmenu::on_pushButton_6_clicked()
@@ -526,8 +579,12 @@ void Gestionplatsmenu::on_pushButton_9_clicked()
       if (test)
 
       {
+
           ui->menu_tab->setModel(M.afficher1()) ;
+          Notifications N;
+           N.notifications_ajoutermenu();
           INFORMER(ui->labelmessage2," MENU AJOUTE AVEC SUCCES ",3000);
+
       }
       else
 
@@ -573,3 +630,66 @@ void   Gestionplatsmenu::mailSent(QString status)
     ui->msg->clear();
     ui->mail_pass->clear();
 }
+
+void Gestionplatsmenu::on_chercher_2_textChanged(const QString &arg1)
+{
+    QString by=ui->listechercher_2->currentText();
+            ui->menu_tab->setModel(M.chercher1(arg1,by));
+}
+
+void Gestionplatsmenu::on_trier_2_clicked()
+{
+    QString Tri = ui->listtrier_2->currentText();
+            ui->menu_tab->setModel(M.Trier1(Tri));
+}
+
+void Gestionplatsmenu::on_pushButton_10_clicked()
+{
+    ui->menu_tab->setModel(M.afficher1()) ;
+    INFORMER(ui->labelmessage2,"LISTE Menu CHARGEE   ",3000);
+}
+
+void Gestionplatsmenu::on_sliderprog_sliderMoved(int position)
+{
+player->setPosition(position);
+}
+
+void Gestionplatsmenu::on_slidervolume_sliderMoved(int position)
+{
+player->setVolume(position);
+}
+
+void Gestionplatsmenu::on_pushButton_18_clicked()
+{
+    //load file
+    player->setMedia(QUrl("C:/Users/Home/Documents/gestionplats-menu/m.mp3"));
+    player->play();
+    qDebug()<< player->errorString();
+}
+
+void Gestionplatsmenu::on_pushButton_19_clicked()
+{
+    player->stop();
+}
+
+void Gestionplatsmenu::on_positionChanged(qint64 position)
+{
+    ui->sliderprog->setValue(position);
+}
+
+void Gestionplatsmenu::on_durationChanged(qint64 position)
+{
+ui->sliderprog->setMaximum(position);
+}
+
+void Gestionplatsmenu::on_stat_clicked()
+{
+   ui->tabWidget_2->setCurrentIndex(6);
+}
+
+void Gestionplatsmenu::on_pushButton_20_clicked()
+{
+      ui->tabWidget_2->setCurrentIndex(1);
+}
+
+

@@ -105,4 +105,31 @@ QSqlQueryModel*Menu::afficherById1(int id) {
     return model;
 }
 
+QSqlQueryModel* Menu::chercher1(QString chercher,QString by) {
+    QSqlQueryModel* model = new QSqlQueryModel();
+    if(by=="nom") {
+        model->setQuery("SELECT * FROM menu WHERE nom LIKE '"+chercher+"%'");
+    }
+    else if(by=="prix") {
+       model->setQuery("SELECT * FROM plats WHERE  prix LIKE '"+chercher+"%'");
+    }
+
+    return model;
+}
+QSqlQueryModel* Menu::Trier1(QString tri) {
+    QSqlQueryModel* model = new QSqlQueryModel();
+    if(tri=="nom") {
+        model->setQuery("SELECT * FROM menu ORDER BY nom");
+    }
+
+
+    else if(tri=="prix") {
+        model->setQuery("SELECT * FROM menu ORDER BY prix ");
+    }
+    else if(tri=="description") {
+        model->setQuery("SELECT * FROM menu ORDER BY description ");
+    }
+
+    return model;
+}
 

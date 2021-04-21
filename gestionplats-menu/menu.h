@@ -34,6 +34,8 @@ public:
     QSqlQueryModel* afficher1();
     QSqlQueryModel* afficherById1(int);
     QSqlQueryModel* listId1();
+     QSqlQueryModel* chercher1(QString,QString);
+     QSqlQueryModel* Trier1(QString);
 };
 
 

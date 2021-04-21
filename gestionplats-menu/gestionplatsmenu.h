@@ -7,7 +7,9 @@
 #include <QDialog>
 #include <QMainWindow>
 #include<QObject>
-#include "qcustomplot.h"
+#include<QMediaPlayer>
+
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Gestionplatsmenu; }
@@ -108,10 +110,33 @@ private slots:
 
     void on_pushButton_9_clicked();
 
+    void on_chercher_2_textChanged(const QString &arg1);
+
+    void on_trier_2_clicked();
+
+    void on_pushButton_10_clicked();
+
+    void on_sliderprog_sliderMoved(int position);
+
+    void on_slidervolume_sliderMoved(int position);
+
+    void on_pushButton_18_clicked();
+
+    void on_pushButton_19_clicked();
+      void on_positionChanged(qint64 position);
+    void on_durationChanged(qint64 position);
+
+    void on_stat_clicked();
+
+    void on_pushButton_20_clicked();
+
+
 private:
     Ui::Gestionplatsmenu *ui;
      Plats P;
      Menu M;
+     QMediaPlayer* player;
+
  QStringList files;
 };
 #endif // GESTIONPLATSMENU_H

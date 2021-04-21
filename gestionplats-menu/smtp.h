@@ -1,8 +1,5 @@
 #ifndef SMTP_H
 #define SMTP_H
-
-
-
 #include <QtNetwork/QAbstractSocket>
 #include <QtNetwork/QSslSocket>
 #include <QString>
@@ -12,6 +9,7 @@
 #include <QByteArray>
 #include <QFile>
 #include <QFileInfo>
+#include <QtNetwork>
 
 
 
