@@ -19,10 +19,26 @@
 #include <QtPrintSupport/QPrintDialog>
 #include<QtPrintSupport/QPrinter>
 #include "notifications.h"
+#include "qcustomplot.h"
+#include <QtCharts>
+#include "notepad.h"
+#include<QtCharts>
+#include<QBarSet>
+#include<QBarSeries>
 
+#include <QChartView>
+#include <QBarSeries>
+#include <QBarSet>
+#include <QLegend>
+#include <QBarCategoryAxis>
+#include <QHorizontalStackedBarSeries>
+#include <QLineSeries>
+#include <QCategoryAxis>
+#include <QPieSeries>
+#include <QPieSlice>
 
-
-
+#include <QDesktopServices>
+#include <QUrl>
 #include<excel.h>
 
 
@@ -32,6 +48,16 @@ Gestionplatsmenu::Gestionplatsmenu(QWidget *parent)
     , ui(new Ui::Gestionplatsmenu)
 {
     ui->setupUi(this);
+    int ret=A.connect_arduino(); // lancer la connexion à arduino
+    switch(ret){
+    case(0):qDebug()<< "arduino is available and connected to : "<< A.getarduino_port_name();
+        break;
+    case(1):qDebug() << "arduino is available but not connected to :" <<A.getarduino_port_name();
+       break;
+    case(-1):qDebug() << "arduino is not available";
+    }
+     QObject::connect(A.getserial(),SIGNAL(readyRead()),this,SLOT(update_label())); // permet de lancer
+     //le slot update_label suite à la reception du signal readyRead (reception des données).
 
     ui->tabWidget_2->setCurrentIndex(0);
     QTabBar *tabBar = ui->tabWidget_2->findChild<QTabBar *>();
@@ -258,16 +284,16 @@ void Gestionplatsmenu::on_ListDeleteME_B_clicked()
     //bool test=M.supprimer1(M.getId());
     if(M.supprimer1(M.getId())) {
         QMessageBox::information(nullptr, QObject::tr("Done"),
-                    QObject::tr("Deleted successefully.\n"
-                                "Click Ok to exit."), QMessageBox::Ok);
+                    QObject::tr("menu supprimer.\n"
+                                "cliquer sur ok pour quitter."), QMessageBox::Ok);
         ui->idListME_CB->setModel(M.listId1());
         ui->menu_tab->setModel(M.afficher1());
         ui->tabWidget->setCurrentIndex(2);
     }
     else {
-        QMessageBox::critical(nullptr, QObject::tr("Nope"),
-                    QObject::tr("Deleting failed.\n"
-                                "Click Ok to exit."), QMessageBox::Ok);
+        QMessageBox::critical(nullptr, QObject::tr("nom"),
+                    QObject::tr(" menu non supprimer.\n"
+                                "cliquer sur ok pour quitter."), QMessageBox::Ok);
     }
 
 }
@@ -390,8 +416,8 @@ void Gestionplatsmenu::on_exporter_2_clicked()
     int retVal = obj.export2Excel();
     if( retVal > 0)
     {
-        QMessageBox::information(this, tr("Done"),
-                                 QString(tr("%1 records exported!")).arg(retVal)
+        QMessageBox::information(this, tr("fait"),
+                                 QString(tr("%1 enregistrement exporter!")).arg(retVal)
                                  );
     }
 
@@ -494,7 +520,7 @@ void Gestionplatsmenu::on_exporterXM_clicked()
     if( retVal > 0)
     {
         QMessageBox::information(this, tr("Done"),
-                                 QString(tr("%1 records exported!")).arg(retVal)
+                                 QString(tr("%1 enregistrement exporter !")).arg(retVal)
                                  );
     }
 
@@ -518,6 +544,7 @@ void Gestionplatsmenu::on_pushButton_5_clicked()
 void Gestionplatsmenu::on_pushButton_6_clicked()
 {
     ui->tabWidget_2->setCurrentIndex(1);
+    Gestionplatsmenu::makePlot_type();
 
 
 }
@@ -622,8 +649,8 @@ void   Gestionplatsmenu::sendMail()
 void   Gestionplatsmenu::mailSent(QString status)
 {
 
-    if(status == "Message sent")
-        QMessageBox::warning( nullptr, tr( "Qt Simple SMTP client" ), tr( "Message sent!\n\n" ) );
+    if(status == "Message envoyee")
+        QMessageBox::warning( nullptr, tr( "client Qt Simple SMTP " ), tr( "Message envoyee!\n\n" ) );
     ui->rcpt->clear();
     ui->subject->clear();
     ui->file->clear();
@@ -684,7 +711,69 @@ ui->sliderprog->setMaximum(position);
 
 void Gestionplatsmenu::on_stat_clicked()
 {
-   ui->tabWidget_2->setCurrentIndex(6);
+
+   /********************* BEGIN : Donut->Nationalite *********************/
+       QSqlQuery qry;
+       qry.prepare("SELECT COUNT (*) FROM employe where nom='caissier'");
+       qry.exec();
+       int Cs= 0;
+       if (qry.next()) {
+           Cs= qry.value(0).toInt();
+       }
+       QSqlQuery qery;
+       qery.prepare("SELECT COUNT (*) FROM employe where nom='chef de cuisine'");
+       qery.exec();
+       int Cc= 0;
+       if (qery.next()) {
+           Cc= qery.value(0).toInt();
+       }
+       QSqlQuery qury;
+       qury.prepare("SELECT COUNT (*) FROM employe where nom='employe'");
+       qury.exec();
+       int Ep= 0;
+       if (qury.next()) {
+           Ep= qury.value(0).toInt();
+       }
+
+       QPieSeries *series = new QPieSeries();
+       series->append("Chef de Cuisine", Cc);
+       series->append("Caissier", Cs);
+       series->append("Employe", Ep);
+       series->setHoleSize(0.5);
+       series->setPieSize(0.8);
+
+       QPieSlice *cc = series->slices().at(0);
+       QPieSlice *cs = series->slices().at(1);
+       QPieSlice *ep = series->slices().at(2);
+       //QPieSlice *autres = series->slices().at(4);
+       /*********************** Labels
+       tn->setLabelVisible(true);
+       fr->setLabelVisible(true);
+       ag->setLabelVisible(true);
+       lb->setLabelVisible(true);
+       autres->setLabelVisible(true);
+       ******************************/
+       cs->setBrush(Qt::red);
+       cc->setBrush(Qt::blue);
+       ep->setBrush(Qt::green);
+
+       QChart *chart = new QChart();
+       chart->addSeries(series);
+       chart->setTitle("Statistiques");
+       chart->legend()->setVisible(true);
+       chart->legend()->setAlignment(Qt::AlignBottom);
+       chart->setAnimationOptions(QChart::AllAnimations);
+
+       QChartView *chartView = new QChartView(chart);
+       chartView->setParent(ui->horizontalFrame);
+       /********************* END : Donut->Nationalite *********************/
+
+
+       ui->tabWidget_2->setCurrentIndex(6);
+       Gestionplatsmenu::makePlot_type();
+
+
+
 }
 
 void Gestionplatsmenu::on_pushButton_20_clicked()
@@ -693,3 +782,148 @@ void Gestionplatsmenu::on_pushButton_20_clicked()
 }
 
 
+
+void Gestionplatsmenu::on_pushButton_13_clicked()
+{
+    ui->tabWidget_2->setCurrentIndex(3);
+}
+
+void Gestionplatsmenu::on_pushButton_22_clicked()
+{
+      ui->tabWidget_2->setCurrentIndex(1);
+}
+QVector<double> Gestionplatsmenu::Statistique_type()
+{
+    QSqlQuery q;
+    QVector<double> stat(2);
+    stat[0]=0;
+    stat[1]=0;
+
+    q.prepare("SELECT type FROM plats WHERE type='special'");
+    q.exec();
+    while (q.next())
+    {
+        stat[0]++;
+    }
+    q.prepare("SELECT type FROM plats WHERE type='simple'");
+    q.exec();
+    while (q.next())
+    {
+        stat[1]++;
+    }
+
+    return stat;
+}
+void Gestionplatsmenu::makePlot_type()
+{
+    // prepare data:
+    QVector<double> x3(2), y3(20);
+    for (int i=0; i<x3.size(); ++i)
+    {
+      x3[i] = i+1;
+
+    }
+    for (int i=0; i<y3.size(); ++i)
+    {
+      y3[i] = i+1;
+
+    }
+
+    QCPBars *bars1 = new QCPBars(ui->CustomPlot->xAxis, ui->CustomPlot->yAxis);
+    bars1->setWidth(2/(double)x3.size());
+    bars1->setData(x3, Gestionplatsmenu::Statistique_type());
+    bars1->setName("nombre du plats selon type");
+    bars1->setPen(QPen(QColor(200, 40, 60).lighter(170)));
+
+    bars1->setBrush(QColor(200, 40, 60, 170));
+    ui->CustomPlot->replot();
+
+
+    // move bars above graphs and grid below bars:
+    ui->CustomPlot->addLayer("abovemain", ui->CustomPlot->layer("main"), QCustomPlot::limAbove);
+    ui->CustomPlot->addLayer("belowmain", ui->CustomPlot->layer("main"), QCustomPlot::limBelow);
+    ui->CustomPlot->xAxis->grid()->setLayer("belowmain");
+    ui->CustomPlot->yAxis->grid()->setLayer("belowmain");
+
+    // set some pens, brushes and backgrounds:
+    QVector<double> Ticks;
+    Ticks<<1<<2<<3<<4<<5<<6;
+    QVector<QString> labels;
+    labels<<"simple"<<"special";
+    QSharedPointer<QCPAxisTickerText> textTicker(new QCPAxisTickerText);
+    textTicker->addTicks(Ticks,labels);
+    ui->CustomPlot->xAxis->setTicker(textTicker);
+    ui->CustomPlot->xAxis->setSubTicks(false);
+    ui->CustomPlot->xAxis->setTickLength(0,4);
+    ui->CustomPlot->xAxis->setBasePen(QPen(Qt::white, 1));
+    ui->CustomPlot->yAxis->setBasePen(QPen(Qt::white, 1));
+    ui->CustomPlot->xAxis->setTickPen(QPen(Qt::transparent, 1));
+    ui->CustomPlot->yAxis->setTickPen(QPen(Qt::white, 1));
+    ui->CustomPlot->xAxis->setSubTickPen(QPen(Qt::transparent, 1));
+    ui->CustomPlot->yAxis->setSubTickPen(QPen(Qt::transparent, 1));
+    ui->CustomPlot->xAxis->setTickLabelColor(Qt::white);
+    ui->CustomPlot->yAxis->setTickLabelColor(Qt::white);
+    ui->CustomPlot->xAxis->grid()->setPen(QPen(QColor(140, 140, 140), 1, Qt::DotLine));
+    ui->CustomPlot->yAxis->grid()->setPen(QPen(QColor(140, 140, 140), 1, Qt::DotLine));
+    ui->CustomPlot->xAxis->grid()->setSubGridPen(QPen(QColor(80, 80, 80), 1, Qt::DotLine));
+    ui->CustomPlot->yAxis->grid()->setSubGridPen(QPen(QColor(80, 80, 80), 1, Qt::DotLine));
+    ui->CustomPlot->xAxis->grid()->setSubGridVisible(true);
+    ui->CustomPlot->yAxis->grid()->setSubGridVisible(true);
+    ui->CustomPlot->xAxis->grid()->setZeroLinePen(Qt::NoPen);
+    ui->CustomPlot->yAxis->grid()->setZeroLinePen(Qt::NoPen);
+    ui->CustomPlot->xAxis->setUpperEnding(QCPLineEnding::esSpikeArrow);
+    ui->CustomPlot->yAxis->setUpperEnding(QCPLineEnding::esSpikeArrow);
+    QLinearGradient plotGradient;
+    plotGradient.setStart(0, 0);
+    plotGradient.setFinalStop(0, 350);
+    plotGradient.setColorAt(0, QColor(10, 50, 80));
+    plotGradient.setColorAt(1, QColor(10, 20, 50));
+    ui->CustomPlot->setBackground(plotGradient);
+    QLinearGradient axisRectGradient;
+    axisRectGradient.setStart(0, 0);
+    axisRectGradient.setFinalStop(0, 350);
+    axisRectGradient.setColorAt(0, QColor(10, 50, 80));
+    axisRectGradient.setColorAt(1, QColor(0, 0, 30));
+    ui->CustomPlot->axisRect()->setBackground(axisRectGradient);
+
+    ui->CustomPlot->rescaleAxes();
+    ui->CustomPlot->xAxis->setRange(0, 7);
+    ui->CustomPlot->yAxis->setRange(0, 10);
+
+
+}
+
+void Gestionplatsmenu::on_pushButton_25_clicked()
+{
+    Gestionplatsmenu::makePlot_type();
+}
+void Gestionplatsmenu::update_label()
+{
+    data=A.read_from_arduino();
+
+    if(data=="#")
+  qDebug() << data;
+
+        ui->label_5->setText(input_password); // si les données reçues de arduino via la liaison série sont égales à 1
+    // alors afficher ON
+
+
+}
+ void Gestionplatsmenu::on_arduino_clicked()
+ {
+     A.write_to_arduino("#"); //envoyer 1 à arduino
+ }
+
+void Gestionplatsmenu::on_notepad_clicked()
+{
+   notepad *ga;
+     ga = new  notepad();
+     ga->show();
+}
+
+void Gestionplatsmenu::on_webpage_clicked()
+{
+    QString link="http://www.google.com";
+
+    QDesktopServices::openUrl(QUrl(link));
+}
