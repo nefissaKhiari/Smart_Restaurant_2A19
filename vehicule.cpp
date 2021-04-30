@@ -72,6 +72,14 @@ bool Vehicule::modifier1(int id_vehicule)
 
     return    query.exec();
 }
-
+QSqlQueryModel* Vehicule::tri()
+{
+    QSqlQueryModel* model=new QSqlQueryModel();
+          model->setQuery("SELECT * FROM vehicule ORDER BY ID   ");
+                    model->setHeaderData(0, Qt::Horizontal, QObject::tr("identifiant"));
+                    model->setHeaderData(1, Qt::Horizontal, QObject::tr("modele"));
+                    model->setHeaderData(2, Qt::Horizontal, QObject::tr("etat"));
+    return model;
+}
 
 

@@ -3,11 +3,13 @@
 #include <QMessageBox>
 #include "connection.h"
 int main(int argc, char *argv[])
-{
+{  Connection c;
+    bool test=c.createconnect();
+
     QApplication a(argc, argv);
     MainWindow w;
-    Connection c;
-    bool test=c.createconnect();
+
+
 
     MainWindow W;
     if(test)

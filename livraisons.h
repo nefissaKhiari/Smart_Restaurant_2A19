@@ -7,15 +7,17 @@
 class livraisons
 {
 public:
-   livraisons();
-    livraisons(int , int,int);
-    int getID();
-    int getDATE_L();
-    int getID_LIVREUR();
 
+    livraisons();
+    livraisons(int , int, int);
+    int getID();
+
+    int getID_LIVREUR();
+    int getID_V ();
     void setID(int);
-    void setDATE_L(int);
+
     void setID_LIVREUR(int);
+    void setID_V(int);
 
     bool ajouter();
     QSqlQueryModel* afficher();
@@ -23,10 +25,12 @@ public:
     bool modifier();
 
     QSqlQueryModel *rechercher(QString search);
+        QSqlQueryModel* trii();
 private:
     int ID;
- int DATE_L;
+
     int ID_LIVREUR;
+    int ID_V;
 
 };
 

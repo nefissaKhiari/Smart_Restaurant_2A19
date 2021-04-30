@@ -3,8 +3,11 @@
 # Project created by QtCreator 2018-10-26T21:45:23
 #
 #-------------------------------------------------
-
+QT       += core gui printsupport
 QT       += core gui sql
+QT       += core gui network
+
+
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -29,12 +32,14 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     connection.cpp \
+    smtp.cpp \
     vehicule.cpp
 
 HEADERS += \
     livraisons.h \
         mainwindow.h \
     connection.h \
+    smtp.h \
     vehicule.h
 
 FORMS += \

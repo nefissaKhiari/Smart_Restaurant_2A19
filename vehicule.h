@@ -1,7 +1,5 @@
 #ifndef Vehicule_H
 #define Vehicule_H
-
-
 #include <QString>
 #include <QSqlQueryModel>
 
@@ -36,7 +34,7 @@ public:
 
     QSqlQueryModel* afficher1();
     bool supprimer1 (QString);
-
+    QSqlQueryModel* tri();
 
 
 };

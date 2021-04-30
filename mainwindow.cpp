@@ -5,14 +5,42 @@
 #include <qmessagebox.h>
 #include <QString>
 #include <QIntValidator>
+#include<QPdfWriter>
+#include <QMessageBox>
+#include <QDebug>
+#include <QtPrintSupport/QPrintDialog>
+#include<QtPrintSupport/QPrinter>
+#include <QFileDialog>
+#include <QDialog>
+#include <QTextDocument>
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    ui->setupUi(this);
+   ui->setupUi(this);
 
-   ui ->tablivraison->setModel(tmplivraisons.afficher());
+   QSqlQueryModel * model= new QSqlQueryModel();
+   model->setQuery("SELECT ID FROM LIVRAISONS");
+   ui->idsupp->setModel(model);
+   ui->idmod->setModel(model);
+   ui->tabvehicule->setModel(tmpv.afficher1());
+   QSqlQueryModel * mod= new QSqlQueryModel();
+   mod->setQuery("SELECT ID FROM VEHICULE");
+   ui->idvsupp->setModel(mod);
+   ui->idvmod->setModel(mod);
+    ui->idv_2->setModel(mod);
+    ui->idve->setModel(mod);
+    ui->idv->setValidator( new QIntValidator(0, 10000, this) );
+     ui->idajout->setValidator( new QIntValidator(0, 10000, this) );
+      ui->livreurajout->setValidator( new QIntValidator(0, 10000, this) );
+          ui->idmod->setValidator( new QIntValidator(0, 10000, this) );
+          ui->livreurmod->setValidator( new QIntValidator(0, 10000, this) );
+
+  ui->tablivraison->setModel(tmplivraisons.afficher());
+
+
 
 }
 
@@ -55,6 +83,16 @@ void MainWindow::on_tabWidget_currentChanged(int)
     mod->setQuery("SELECT ID FROM VEHICULE");
     ui->idvsupp->setModel(mod);
     ui->idvmod->setModel(mod);
+     ui->idv_2->setModel(mod);
+     ui->idve->setModel(mod);
+     ui->idv->setValidator( new QIntValidator(0, 10000, this) );
+      ui->idajout->setValidator( new QIntValidator(0, 10000, this) );
+       ui->livreurajout->setValidator( new QIntValidator(0, 10000, this) );
+           ui->idmod->setValidator( new QIntValidator(0, 10000, this) );
+           ui->livreurmod->setValidator( new QIntValidator(0, 10000, this) );
+
+
+
 
 }
 
@@ -64,12 +102,12 @@ void MainWindow::on_tabWidget_currentChanged(int)
 
 void MainWindow::on_ajout_clicked()
 {
-    int ID=ui->idajout->text().toInt();
-       int DATE_L=ui->dateajout->text().toInt();
+       int ID=ui->idajout->text().toInt();
        int ID_LIVREUR=ui->livreurajout->text().toInt();
+       int ID_V= ui->idv_2->currentText().toInt();
 
 
-       livraisons tmplivraisons(ID,DATE_L,ID_LIVREUR);
+       livraisons tmplivraisons(ID,ID_LIVREUR, ID_V);
        bool test =tmplivraisons.ajouter();
 
 
@@ -80,6 +118,8 @@ void MainWindow::on_ajout_clicked()
             model->setQuery("SELECT ID FROM LIVRAISONS");
             ui->idsupp->setModel(model);
             ui->idmod->setModel(model);
+            QSqlQueryModel * mod= new QSqlQueryModel();
+            ui->idv_2->setModel(mod);
         }
         else{
                 QMessageBox::warning(nullptr,"Error","livraison non ajouter");
@@ -90,10 +130,11 @@ void MainWindow::on_ajout_clicked()
 void MainWindow::on_mod_clicked()
 {
     int ID=ui->idmod->currentText().toInt();
-    int DATE_L=ui->datemod->text().toInt();
-    int ID_LIVREUR=ui->livreurmod->text().toInt();
 
-   livraisons tmplivraison (ID,DATE_L,ID_LIVREUR);
+    int ID_LIVREUR=ui->livreurmod->text().toInt();
+    int ID_V= ui->idve->currentText().toInt();
+
+   livraisons tmplivraison (ID,ID_LIVREUR,ID_V);
     bool test=tmplivraison.modifier();
     if(test){
         ui->tablivraison->setModel(tmplivraison.afficher());
@@ -180,4 +221,88 @@ void MainWindow::on_recherche_textEdited(const QString &arg1)
 {
     livraisons L;
     ui->tablivraison->setModel(L.rechercher(ui->recherche->text()));
+}
+
+
+
+void MainWindow::on_trii_clicked()
+{
+   ui->tablivraison->setModel(tmplivraisons.trii());
+
+}
+
+void MainWindow::on_pushButton_3_clicked()
+{
+    QString strStream;
+                    QTextStream out(&strStream);
+
+                    const int rowCount = ui->tablivraison->model()->rowCount();
+                    const int columnCount = ui->tablivraison->model()->columnCount();
+
+                    out <<"<html>\n"
+                          "<head>\n"
+                           "<meta Content=\"Text/html; charset=Windows-1251\">\n"
+
+
+
+                        << "</head>\n"
+                        "<body bgcolor=#ffffff link=#5000A0>\n"
+
+
+
+                        "<table style=\"text-align: center; font-size: 30px;\" border=1>\n "
+                          "</br> </br>";
+                    // headers
+                    out << "<thead><tr bgcolor=#d6e5ff>";
+                    for (int column = 0; column < columnCount; column++)
+                        if (!ui->tablivraison->isColumnHidden(column))
+                            out << QString("<th>%1</th>").arg(ui->tablivraison->model()->headerData(column, Qt::Horizontal).toString());
+                    out << "</tr></thead>\n";
+
+                    // data table
+                    for (int row = 0; row < rowCount; row++) {
+                        out << "<tr>";
+                        for (int column = 0; column < columnCount; column++) {
+                            if (!ui->tablivraison->isColumnHidden(column)) {
+                                QString data =ui->tablivraison->model()->data(ui->tablivraison->model()->index(row, column)).toString().simplified();
+                                out << QString("<td bkcolor=0>%1</td>").arg((!data.isEmpty()) ? data : QString("&nbsp;"));
+                            }
+                        }
+                        out << "</tr>\n";
+                    }
+                    out <<  "</table>\n"
+                        "</body>\n"
+                        "</html>\n";
+
+                    QTextDocument *document = new QTextDocument();
+                    document->setHtml(strStream);
+
+                    QPrinter printer;
+
+                    QPrintDialog *test = new QPrintDialog(&printer, NULL);
+                    if (test->exec() == QDialog::Accepted) {
+                        document->print(&printer);
+                    }
+
+                    delete document;
+}
+
+void MainWindow::on_pushButton_4_clicked()
+{
+
+     ui->tabvehicule->setModel(tmpv.tri());
+}
+
+void MainWindow::on_pushButton_5_clicked()
+{
+
+    ui->tabvehicule->setModel(tmpv.tri());
+}
+
+
+
+
+void MainWindow::on_pushButton_clicked()
+{
+
 }

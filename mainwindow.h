@@ -46,6 +46,20 @@ private slots:
 
 
 
+    //void on_tabWidget_2_currentChanged(int index);
+
+    void on_trii_clicked();
+
+    void on_pushButton_3_clicked();
+
+    void on_pushButton_4_clicked();
+
+    void on_pushButton_5_clicked();
+
+    void on_mail_clicked();
+
+    void on_pushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     livraisons tmplivraisons;
