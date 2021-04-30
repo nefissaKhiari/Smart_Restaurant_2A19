@@ -1,33 +1,9 @@
 <RCC>
     <qresource prefix="/">
-        <file>resource/chercher.png</file>
-        <file>resource/remove.png</file>
-        <file>resource/edit .png</file>
-        <file>resource/printer.png</file>
-        <file>resource/sort.png</file>
         <file>resource/cross .png</file>
-        <file>resource/dish .png</file>
-        <file>resource/menu.png</file>
-        <file>resource/email.png</file>
-        <file>resource/confirm.png</file>
-        <file>resource/excel.png</file>
-        <file>resource/excel (1).png</file>
-        <file>resource/pdf (1).png</file>
-        <file>resource/xls (1).png</file>
-        <file>resource/cancel (1).png</file>
-        <file>resource/login.png</file>
-        <file>resource/menu (2).png</file>
-        <file>resource/tray.png</file>
-        <file>resource/restaurant (1).png</file>
-        <file>resource/reception-bell.png</file>
-        <file>resource/message.png</file>
-        <file>resource/excel (2).png</file>
-        <file>resource/check.png</file>
+        <file>resource/edit .png</file>
+        <file>resource/remove.png</file>
+        <file>resource/chercher.png</file>
         <file>resource/plus (1).png</file>
-        <file>resource/email (1).png</file>
-        <file>resource/browsing.png</file>
-        <file>resource/statistics.png</file>
-        <file>resource/play-button.png</file>
-        <file>resource/stop.png</file>
     </qresource>
 </RCC>
