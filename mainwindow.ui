@@ -6,6 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
+<<<<<<< HEAD
     <width>1291</width>
     <height>830</height>
    </rect>
@@ -16,11 +17,20 @@
   <property name="styleSheet">
    <string notr="true">background-color: rgb(255, 170, 127);
 background-color: rgb(255, 255, 255);</string>
+=======
+    <width>1405</width>
+    <height>679</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Gestion des livraisons</string>
+>>>>>>> 2eb64e115593b267e435c60f8ef171d60ffecaf4
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
+<<<<<<< HEAD
       <x>50</x>
       <y>40</y>
       <width>1021</width>
@@ -34,6 +44,24 @@ background-color: rgb(255, 255, 255);</string>
 
 
 
+=======
+      <x>190</x>
+      <y>50</y>
+      <width>1001</width>
+      <height>541</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QToolTip
+
+{
+     border: 1px solid black;
+     background-color: #ffa02f;
+     padding: 1px;
+     border-radius: 3px;
+     opacity: 100;
+}
+>>>>>>> 2eb64e115593b267e435c60f8ef171d60ffecaf4
 
 QWidget
 {  color: #b1b1b1;
@@ -42,13 +70,21 @@ QWidget
 
 QWidget:item:hover
 {
+<<<<<<< HEAD
     background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #ffd42f, stop: 1 #ca0619);
+=======
+    background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #ffa02f, stop: 1 #ca0619);
+>>>>>>> 2eb64e115593b267e435c60f8ef171d60ffecaf4
     color: #000000;
 }
 
 QWidget:item:selected
 {
+<<<<<<< HEAD
     background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #ffd42f, stop: 1 #d7801a);
+=======
+    background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #ffa02f, stop: 1 #d7801a);
+>>>>>>> 2eb64e115593b267e435c60f8ef171d60ffecaf4
 }
 
 QMenuBar::item
@@ -486,6 +522,7 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
 }</string>
     </property>
     <property name="currentIndex">
+<<<<<<< HEAD
      <number>0</number>
     </property>
     <widget class="QWidget" name="tab_3">
@@ -1126,17 +1163,433 @@ background-color: qlineargradient(spread:repeat, x1:0, y1:0, x2:1, y2:0, stop:0 
          <y>220</y>
          <width>71</width>
          <height>61</height>
+=======
+     <number>1</number>
+    </property>
+    <property name="tabBarAutoHide">
+     <bool>false</bool>
+    </property>
+    <widget class="QWidget" name="tab_3">
+     <attribute name="title">
+      <string>gestion livraison</string>
+     </attribute>
+     <widget class="QGroupBox" name="groupBox">
+      <property name="geometry">
+       <rect>
+        <x>580</x>
+        <y>20</y>
+        <width>401</width>
+        <height>301</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>ajout</string>
+      </property>
+      <widget class="QPushButton" name="ajout">
+       <property name="geometry">
+        <rect>
+         <x>300</x>
+         <y>120</y>
+         <width>71</width>
+         <height>61</height>
         </rect>
        </property>
        <property name="styleSheet">
         <string notr="true">     background-color: #C0C0C0;
-border-image: url(:/resource/plus (1).png);
-image: url(:/resource/plus (1).png);</string>
+image: url(:/new/prefix1/resource/cross .png);</string>
        </property>
        <property name="text">
         <string/>
        </property>
       </widget>
+      <widget class="QWidget" name="layoutWidget">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>40</y>
+         <width>261</width>
+         <height>231</height>
+        </rect>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <item>
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>id</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>id livreur</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_15">
+            <property name="text">
+             <string>id vehicule</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <widget class="QLineEdit" name="idajout"/>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="livreurajout"/>
+          </item>
+          <item>
+           <widget class="QComboBox" name="idv_2"/>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+     <widget class="QTabWidget" name="tabWidget_2">
+      <property name="geometry">
+       <rect>
+        <x>-10</x>
+        <y>-40</y>
+        <width>841</width>
+        <height>591</height>
+       </rect>
+      </property>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>Tab 1</string>
+       </attribute>
+       <widget class="QComboBox" name="idsupp">
+        <property name="geometry">
+         <rect>
+          <x>700</x>
+          <y>370</y>
+          <width>69</width>
+          <height>22</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="supp">
+        <property name="geometry">
+         <rect>
+          <x>710</x>
+          <y>420</y>
+          <width>81</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">     background-color: #C0C0C0;
+image: url(:/new/prefix1/resource/remove.png);</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_8">
+        <property name="geometry">
+         <rect>
+          <x>576</x>
+          <y>370</y>
+          <width>81</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color:orange;</string>
+        </property>
+        <property name="text">
+         <string>id:</string>
+        </property>
+       </widget>
+       <widget class="QTableView" name="tablivraison">
+        <property name="geometry">
+         <rect>
+          <x>115</x>
+          <y>130</y>
+          <width>411</width>
+          <height>192</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_2">
+        <property name="geometry">
+         <rect>
+          <x>290</x>
+          <y>60</y>
+          <width>81</width>
+          <height>71</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">image: url(:/new/prefix1/resource/boite.png);</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_3">
+        <property name="geometry">
+         <rect>
+          <x>510</x>
+          <y>50</y>
+          <width>75</width>
+          <height>61</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">image: url(:/new/prefix1/resource/pdf.png);</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="recherche">
+        <property name="geometry">
+         <rect>
+          <x>420</x>
+          <y>410</y>
+          <width>113</width>
+          <height>20</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="trii">
+        <property name="geometry">
+         <rect>
+          <x>460</x>
+          <y>470</y>
+          <width>75</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>tri</string>
+        </property>
+       </widget>
+       <widget class="QGroupBox" name="groupBox_2">
+        <property name="geometry">
+         <rect>
+          <x>100</x>
+          <y>320</y>
+          <width>241</width>
+          <height>221</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>modifier</string>
+        </property>
+        <widget class="QPushButton" name="mod">
+         <property name="geometry">
+          <rect>
+           <x>160</x>
+           <y>170</y>
+           <width>71</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">     background-color: #C0C0C0;
+image: url(:/new/prefix1/resource/edit .png);</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+        <widget class="QWidget" name="layoutWidget">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>30</y>
+           <width>221</width>
+           <height>131</height>
+          </rect>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_2">
+            <item>
+             <widget class="QLabel" name="label_9">
+              <property name="text">
+               <string>id</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_7">
+              <property name="text">
+               <string>id livreur</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_16">
+              <property name="text">
+               <string>id vehicule</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout">
+            <item>
+             <widget class="QComboBox" name="idmod"/>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="livreurmod"/>
+            </item>
+            <item>
+             <widget class="QComboBox" name="idve"/>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tab_2">
+       <attribute name="title">
+        <string>Tab 2</string>
+       </attribute>
+      </widget>
+     </widget>
+     <zorder>tabWidget_2</zorder>
+     <zorder>groupBox</zorder>
+    </widget>
+    <widget class="QWidget" name="tab_4">
+     <attribute name="title">
+      <string>gestion vehicule</string>
+     </attribute>
+     <widget class="QTableView" name="tabvehicule">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>120</y>
+        <width>441</width>
+        <height>192</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_3">
+      <property name="geometry">
+       <rect>
+        <x>560</x>
+        <y>50</y>
+        <width>401</width>
+        <height>251</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>ajout</string>
+      </property>
+      <widget class="QLineEdit" name="idv">
+       <property name="geometry">
+        <rect>
+         <x>140</x>
+         <y>60</y>
+         <width>113</width>
+         <height>20</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="modele">
+       <property name="geometry">
+        <rect>
+         <x>140</x>
+         <y>130</y>
+         <width>113</width>
+         <height>20</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="etat">
+       <property name="geometry">
+        <rect>
+         <x>150</x>
+         <y>190</y>
+         <width>113</width>
+         <height>20</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_4">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>60</y>
+         <width>47</width>
+         <height>13</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>id</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_5">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>122</y>
+         <width>91</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>modele</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_6">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>193</y>
+         <width>81</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>etat</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="ajoutv">
+       <property name="geometry">
+        <rect>
+         <x>310</x>
+         <y>162</y>
+         <width>75</width>
+         <height>51</height>
+>>>>>>> 2eb64e115593b267e435c60f8ef171d60ffecaf4
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">     background-color: #C0C0C0;
+<<<<<<< HEAD
+border-image: url(:/resource/plus (1).png);
+image: url(:/resource/plus (1).png);</string>
+=======
+image: url(:/new/prefix1/resource/cross .png);</string>
+>>>>>>> 2eb64e115593b267e435c60f8ef171d60ffecaf4
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+<<<<<<< HEAD
       <widget class="QLineEdit" name="fkfrs">
        <property name="geometry">
         <rect>
@@ -1305,12 +1758,35 @@ image: url(:/resource/plus (1).png);</string>
          <y>40</y>
          <width>56</width>
          <height>16</height>
+=======
+     </widget>
+     <widget class="QGroupBox" name="groupBox_4">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>330</y>
+        <width>211</width>
+        <height>191</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>modifier</string>
+      </property>
+      <widget class="QLabel" name="label_11">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>40</y>
+         <width>47</width>
+         <height>13</height>
+>>>>>>> 2eb64e115593b267e435c60f8ef171d60ffecaf4
         </rect>
        </property>
        <property name="text">
         <string>id</string>
        </property>
       </widget>
+<<<<<<< HEAD
       <widget class="QLabel" name="label_11">
        <property name="geometry">
         <rect>
@@ -1324,16 +1800,24 @@ image: url(:/resource/plus (1).png);</string>
         <string>nom fournisseur</string>
        </property>
       </widget>
+=======
+>>>>>>> 2eb64e115593b267e435c60f8ef171d60ffecaf4
       <widget class="QLabel" name="label_12">
        <property name="geometry">
         <rect>
          <x>10</x>
+<<<<<<< HEAD
          <y>100</y>
          <width>56</width>
+=======
+         <y>70</y>
+         <width>91</width>
+>>>>>>> 2eb64e115593b267e435c60f8ef171d60ffecaf4
          <height>16</height>
         </rect>
        </property>
        <property name="text">
+<<<<<<< HEAD
         <string>prenom</string>
        </property>
       </widget>
@@ -1376,10 +1860,45 @@ image: url(:/resource/plus (1).png);</string>
          <x>110</x>
          <y>170</y>
          <width>121</width>
+=======
+        <string>modele</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_13">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>100</y>
+         <width>71</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>etat</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="modelemod">
+       <property name="geometry">
+        <rect>
+         <x>90</x>
+         <y>60</y>
+         <width>113</width>
+         <height>20</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="idvmod">
+       <property name="geometry">
+        <rect>
+         <x>110</x>
+         <y>30</y>
+         <width>69</width>
+>>>>>>> 2eb64e115593b267e435c60f8ef171d60ffecaf4
          <height>22</height>
         </rect>
        </property>
       </widget>
+<<<<<<< HEAD
       <widget class="QLabel" name="label_14">
        <property name="geometry">
         <rect>
@@ -1578,12 +2097,37 @@ image: url(:/resource/edit .png);</string>
         <string notr="true">
 border-image: url(:/resource/cancel (1).png);
 </string>
+=======
+      <widget class="QLineEdit" name="etatmod">
+       <property name="geometry">
+        <rect>
+         <x>90</x>
+         <y>100</y>
+         <width>113</width>
+         <height>20</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="modv">
+       <property name="geometry">
+        <rect>
+         <x>120</x>
+         <y>140</y>
+         <width>75</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">     background-color: #C0C0C0;
+image: url(:/new/prefix1/resource/edit .png);</string>
+>>>>>>> 2eb64e115593b267e435c60f8ef171d60ffecaf4
        </property>
        <property name="text">
         <string/>
        </property>
       </widget>
      </widget>
+<<<<<<< HEAD
      <widget class="QLineEdit" name="search">
       <property name="geometry">
        <rect>
@@ -1909,10 +2453,19 @@ border-image: url(:/resource/cancel (1).png);
         <x>100</x>
         <y>450</y>
         <width>181</width>
+=======
+     <widget class="QComboBox" name="idvsupp">
+      <property name="geometry">
+       <rect>
+        <x>788</x>
+        <y>331</y>
+        <width>91</width>
+>>>>>>> 2eb64e115593b267e435c60f8ef171d60ffecaf4
         <height>31</height>
        </rect>
       </property>
      </widget>
+<<<<<<< HEAD
      <widget class="QPushButton" name="supp">
       <property name="geometry">
        <rect>
@@ -1920,18 +2473,32 @@ border-image: url(:/resource/cancel (1).png);
         <y>540</y>
         <width>61</width>
         <height>61</height>
+=======
+     <widget class="QPushButton" name="suppv">
+      <property name="geometry">
+       <rect>
+        <x>810</x>
+        <y>372</y>
+        <width>75</width>
+        <height>41</height>
+>>>>>>> 2eb64e115593b267e435c60f8ef171d60ffecaf4
        </rect>
       </property>
       <property name="styleSheet">
        <string notr="true">     background-color: #C0C0C0;
+<<<<<<< HEAD
 
 
 border-image: url(:/resource/cancel (1).png);</string>
+=======
+image: url(:/new/prefix1/resource/remove.png);</string>
+>>>>>>> 2eb64e115593b267e435c60f8ef171d60ffecaf4
       </property>
       <property name="text">
        <string/>
       </property>
      </widget>
+<<<<<<< HEAD
      <widget class="QLabel" name="label_5">
       <property name="geometry">
        <rect>
@@ -2813,6 +3380,71 @@ border-image: url(:/resource/plus (1).png);</string>
       </property>
       <property name="text">
        <string/>
+=======
+     <widget class="QLabel" name="label_14">
+      <property name="geometry">
+       <rect>
+        <x>666</x>
+        <y>340</y>
+        <width>111</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>idvehicule:</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>50</y>
+        <width>91</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">image: url(:/new/prefix1/resource/livraison-gratuite.png);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QFrame" name="frame">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>360</y>
+        <width>120</width>
+        <height>80</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_5">
+      <property name="geometry">
+       <rect>
+        <x>480</x>
+        <y>370</y>
+        <width>75</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>tri</string>
+>>>>>>> 2eb64e115593b267e435c60f8ef171d60ffecaf4
       </property>
      </widget>
     </widget>
@@ -2823,8 +3455,13 @@ border-image: url(:/resource/plus (1).png);</string>
     <rect>
      <x>0</x>
      <y>0</y>
+<<<<<<< HEAD
      <width>1291</width>
      <height>26</height>
+=======
+     <width>1405</width>
+     <height>21</height>
+>>>>>>> 2eb64e115593b267e435c60f8ef171d60ffecaf4
     </rect>
    </property>
   </widget>
@@ -2839,6 +3476,7 @@ border-image: url(:/resource/plus (1).png);</string>
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+<<<<<<< HEAD
  <customwidgets>
   <customwidget>
    <class>QCustomPlot</class>
@@ -2847,6 +3485,8 @@ border-image: url(:/resource/plus (1).png);</string>
    <container>1</container>
   </customwidget>
  </customwidgets>
+=======
+>>>>>>> 2eb64e115593b267e435c60f8ef171d60ffecaf4
  <resources/>
  <connections/>
 </ui>
