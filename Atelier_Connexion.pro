@@ -3,16 +3,11 @@
 # Project created by QtCreator 2018-10-26T21:45:23
 #
 #-------------------------------------------------
-<<<<<<< HEAD
-
-QT       += core gui sql  printsupport
-=======
 QT       += core gui printsupport
 QT       += core gui sql
 QT       += core gui network
 
 
->>>>>>> 2eb64e115593b267e435c60f8ef171d60ffecaf4
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -33,23 +28,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
-<<<<<<< HEAD
-    QrCode.cpp \
-    fournisseur.cpp \
-        main.cpp \
-        mainwindow.cpp \
-    connection.cpp \
-    produits.cpp \
-    qcustomplot.cpp
-
-HEADERS += \
-    QrCode.hpp \
-    fournisseur.h \
-        mainwindow.h \
-    connection.h \
-    produits.h \
-    qcustomplot.h
-=======
     livraisons.cpp \
         main.cpp \
         mainwindow.cpp \
@@ -63,7 +41,6 @@ HEADERS += \
     connection.h \
     smtp.h \
     vehicule.h
->>>>>>> 2eb64e115593b267e435c60f8ef171d60ffecaf4
 
 FORMS += \
         mainwindow.ui
@@ -74,12 +51,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
-<<<<<<< HEAD
-    resource.qrc \
-    resourcee.qrc
-
-DISTFILES +=
-=======
     resource.qrc
 
 DISTFILES += \
@@ -87,4 +58,3 @@ DISTFILES += \
     resource/cross .png \
     resource/cross .png \
     resource/edit .png
->>>>>>> 2eb64e115593b267e435c60f8ef171d60ffecaf4
