@@ -1,17 +1,38 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "ui_statistiques.h"
+
 #include "produits.h"
 #include "fournisseur.h"
 #include <qmessagebox.h>
 #include <QIntValidator>
+#include <QtPrintSupport/QPrinter>
+#include <QtPrintSupport/QPrintDialog>
+#include <QScrollBar>
+#include <qfiledialog.h>
+#include <QIntValidator>
+
+
+
 using namespace qrcodegen;
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    animation =new QPropertyAnimation(ui->pushButton,"geometry");
+    animation->setDuration(1000);
+    animation->setStartValue(ui->pushButton->geometry());
+    animation->setEndValue(QRect(500,200,200,100));
+      animation ->start();
 
+    animation =new QPropertyAnimation(ui->pushButton_4,"geometry");
+    animation->setDuration(1000);
+    animation->setStartValue(ui->pushButton_4->geometry());
+    animation->setEndValue(QRect(200,500,200,100));
+    animation ->start();
+    ui->tabWidget->setCurrentIndex(0);
+    QTabBar *tabBar = ui->tabWidget->findChild<QTabBar *>();
+    tabBar->hide();
 
     ui->tabproduits->setModel(tmpproduit.afficher());
     ui->tabfournisseur->setModel(tmpfournisseur.afficher());
@@ -188,8 +209,9 @@ void MainWindow::on_QRcode_clicked()
     ids="ID: "+ids+" Nom: "+produit+" Categorie: "+cateogrie+" Prix: "+price;
     QrCode qr = QrCode::encodeText(ids.toUtf8().constData(), QrCode::Ecc::HIGH);
 
-    // Read the black & white pixels
+
     QImage im(qr.getSize(),qr.getSize(), QImage::Format_RGB888);
+
     for (int y = 0; y < qr.getSize(); y++) {
         for (int x = 0; x < qr.getSize(); x++) {
             int color = qr.getModule(x, y);  // 0 for white, 1 for black
@@ -221,6 +243,7 @@ void MainWindow::on_frssupp_clicked()
 
 void MainWindow::on_stat_clicked()
 {
+    ui->tabWidget->setCurrentIndex(3);
     Produits p;
 
 
@@ -239,3 +262,116 @@ void MainWindow::on_tri_clicked()
     ui->tabfournisseur->setModel(tmpfournisseur.tri());
 
 }
+
+void MainWindow::on_pushButton_clicked()
+{
+    ui->tabWidget->setCurrentIndex(1);
+
+}
+
+void MainWindow::on_pushButton_4_clicked()
+{
+    ui->tabWidget->setCurrentIndex(2);
+
+}
+
+void MainWindow::on_pushButton_5_clicked()
+{
+    ui->tabWidget->setCurrentIndex(0);
+}
+
+void MainWindow::on_pushButton_6_clicked()
+{
+     ui->tabWidget->setCurrentIndex(0);
+}
+
+void MainWindow::on_pushButton_7_clicked()
+{ui->tabWidget->setCurrentIndex(2);
+
+}
+
+void MainWindow::on_excelfournii_clicked()
+{
+    Fournisseur f;
+              QSqlQueryModel * model=new QSqlQueryModel();
+              model=f.Find_fournisseur();
+              QString textData= "id_fournisseur ; nom_fournisseur ; prenom_fournisseur ; tel ; id_produit \n";
+              int rows=model->rowCount();
+              int columns=model->columnCount();
+              for (int i = 0; i < rows; i++)
+              {
+                  for (int j = 0; j < columns; j++)
+                  {
+                      textData += model->data(model->index(i,j)).toString();
+                      textData +=" ; ";
+                  }
+                  textData += "\n";
+              }
+              QString fileName = QFileDialog::getSaveFileName(this, "Export Excel", QString(), "*.csv");
+              if (!fileName.isEmpty())
+                  if (QFileInfo(fileName).suffix().isEmpty())
+                      fileName.append(".csv");
+              QFile csvfile(fileName);
+              if(csvfile.open(QIODevice::WriteOnly|QIODevice::Truncate))
+              {
+                  QTextStream out(&csvfile);
+                  out<<textData;
+              }
+              csvfile.close();
+}
+
+void MainWindow::on_pushButton_2_clicked()
+{
+
+    QString strStream;
+                QTextStream out(&strStream);
+
+                const int rowCount = ui->tabfournisseur->model()->rowCount();
+                const int columnCount = ui->tabfournisseur->model()->columnCount();
+                QString TT = QDate::currentDate().toString("yyyy/MM/dd");
+                out <<"<html>\n"
+                      "<head>\n"
+                       "<meta Content=\"Text/html; charset=Windows-1251\">\n"
+                    << "<title>liste fournisseur<title>\n "
+                    << "</head>\n"
+                    "<body bgcolor=#ffffff link=#5000A0>\n"
+                    "<h1 style=\"text-align: center;\"><strong> ****LISTE DES fournisseurs **** "+TT+"</strong></h1>"
+                    "<table style=\"text-align: center; font-size: 20px;\" border=1>\n "
+                      "</br> </br>";
+                // headers
+                out << "<thead><tr bgcolor=#d6e5ff>";
+                for (int column = 0; column < columnCount; column++)
+                    if (!ui->tabfournisseur->isColumnHidden(column))
+                        out << QString("<th>%1</th>").arg(ui->tabfournisseur->model()->headerData(column, Qt::Horizontal).toString());
+                out << "</tr></thead>\n";
+
+                // data table
+                for (int row = 0; row < rowCount; row++) {
+                    out << "<tr>";
+                    for (int column = 0; column < columnCount; column++) {
+                        if (!ui->tabfournisseur->isColumnHidden(column)) {
+                            QString data =ui->tabfournisseur->model()->data(ui->tabfournisseur->model()->index(row, column)).toString().simplified();
+                            out << QString("<td bkcolor=0>%1</td>").arg((!data.isEmpty()) ? data : QString("&nbsp;"));
+                        }
+                    }
+                    out << "</tr>\n";
+                }
+                out <<  "</table>\n"
+                    "</body>\n"
+                    "</html>\n";
+
+                QTextDocument *document = new QTextDocument();
+                document->setHtml(strStream);
+
+           QPrinter printer;
+
+                QPrintDialog *test = new QPrintDialog(&printer, NULL);
+                if (test->exec() == QDialog::Accepted) {
+                    document->print(&printer);
+                }
+
+                delete document;
+
+
+}
+

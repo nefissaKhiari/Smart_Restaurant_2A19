@@ -24,6 +24,7 @@ public:
     bool modifier(int id_fournisseur);
     QSqlQueryModel * chercher(QString search);
     QSqlQueryModel* tri();
+    QSqlQueryModel* Find_fournisseur();
 private:
     int id_fournisseur;
     QString nom_fournisseur, prenom_fournisseur;

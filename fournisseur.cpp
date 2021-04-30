@@ -95,3 +95,13 @@ QSqlQueryModel* Fournisseur::tri()
            model->setHeaderData(4, Qt::Horizontal, QObject::tr("id_produit"));
     return model;
 }
+QSqlQueryModel* Fournisseur::Find_fournisseur()
+{
+    QSqlQueryModel * model = new QSqlQueryModel();
+    QSqlQuery query;
+    query.prepare("SELECT id_fournisseur,nom_fournisseur,prenom_fournisseur,tel,id_produit FROM fournisseur");
+
+    query.exec();
+    model->setQuery(query);
+    return model;
+}

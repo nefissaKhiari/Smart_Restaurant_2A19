@@ -1,11 +1,9 @@
 <RCC>
     <qresource prefix="/">
         <file>resource/cross .png</file>
-        <file>resource/confirm.png</file>
         <file>resource/edit .png</file>
         <file>resource/remove.png</file>
         <file>resource/chercher.png</file>
-        <file>resource/fournisseur.png</file>
-        <file>resource/boite.png</file>
+        <file>resource/plus (1).png</file>
     </qresource>
 </RCC>

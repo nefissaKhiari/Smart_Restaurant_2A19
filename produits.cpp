@@ -83,31 +83,17 @@ void Produits::stat(QCustomPlot *customPlot)
 
     customPlot->setBackground(QBrush(gradient));
 
-    // create empty bar chart objects:
-   // QCPBars *regen = new QCPBars(customPlot->xAxis, customPlot->yAxis);
-   // QCPBars *nuclear = new QCPBars(customPlot->xAxis, customPlot->yAxis);
+
     QCPBars *fossil = new QCPBars(customPlot->xAxis, customPlot->yAxis);
-  //  regen->setAntialiased(false); // gives more crisp, pixel aligned bar borders
-  //  nuclear->setAntialiased(false);
+
     fossil->setAntialiased(false);
-  //  regen->setStackingGap(1);
-    //nuclear->setStackingGap(1);
+
     fossil->setStackingGap(1);
     // set names and colors:
-    fossil->setName("Produit");
+    fossil->setName("statistique des prix");
     fossil->setPen(QPen(QColor(111, 9, 176).lighter(170)));
     fossil->setBrush(QColor(111, 9, 176));
-  //  nuclear->setName("Nuclear");
-  //  nuclear->setPen(QPen(QColor(250, 170, 20).lighter(150)));
-  //  nuclear->setBrush(QColor(250, 170, 20));
-   // regen->setName("Regenerative");
-  //  regen->setPen(QPen(QColor(0, 168, 140).lighter(130)));
-  //  regen->setBrush(QColor(0, 168, 140));
-    // stack bars on top of each other:
-  //  nuclear->moveAbove(fossil);
- //   regen->moveAbove(nuclear);
 
-    // prepare x axis with country labels:
     QVector<double> ticks;
     QVector<QString> labels;
     query.prepare("SELECT COUNT(DISTINCT id) FROM produits where prix between 0 and 10");
@@ -152,7 +138,7 @@ void Produits::stat(QCustomPlot *customPlot)
     customPlot->xAxis->grid()->setVisible(true);
     customPlot->xAxis->grid()->setPen(QPen(QColor(130, 130, 130), 0, Qt::DotLine));
     customPlot->xAxis->setTickLabelColor(Qt::white);
-    customPlot->xAxis->setLabelColor(Qt::white);
+    customPlot->xAxis->setLabelColor(Qt::green);
 
     // prepare y axis:
     customPlot->yAxis->setRange(0, 20);
