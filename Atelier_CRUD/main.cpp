@@ -2,9 +2,18 @@
 #include <QApplication>
 #include <QMessageBox>
 #include "connection.h"
+#include <QtWidgets/QApplication>
+#include <QFile>
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    //set style sheet
+    QFile file("./Adaptic.qss");
+    file.open(QFile::ReadOnly);
+    QString styleSheet = QLatin1String(file.readAll());
+    qApp->setStyleSheet(styleSheet);
+
+
     MainWindow w;
     Connection c;
     bool test=c.createconnect();

@@ -16,7 +16,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>Gestion des Clients</string>
+   <string>Gestion des commande</string>
   </property>
   <widget class="QWidget" name="Ajoutercommande">
    <widget class="QTabWidget" name="Tab_commandes">
@@ -29,10 +29,21 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-image: url(:/new/prefix1/folda/back.png);</string>
+     <string notr="true">background-color: rgb(162, 162, 162);
+
+
+
+
+
+
+QWidget
+{  color: #b1b1b1;
+    background-color: #323232;
+}
+</string>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab_7">
      <attribute name="title">
@@ -47,6 +58,9 @@
         <height>231</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
      </widget>
      <widget class="QWidget" name="gridLayoutWidget">
       <property name="geometry">
@@ -59,22 +73,12 @@
       </property>
       <layout class="QGridLayout" name="gridLayout">
        <item row="0" column="0">
-        <widget class="QPushButton" name="Supprimer">
+        <widget class="QPushButton" name="SupprimerCommande">
          <property name="statusTip">
           <string extracomment="Cliquez pour supprimer"/>
          </property>
          <property name="styleSheet">
-          <string notr="true">QPushButton {
-background-color:#0094ff;
-font: 8pt &quot;MS Shell Dlg 2&quot;;
-
-}
-QPushButton:hover
-{background-color: rgb(70, 144, 255);
-color :white;
-
-
-}</string>
+          <string notr="true"/>
          </property>
          <property name="text">
           <string>Supprimer Commande N°:</string>
@@ -174,13 +178,13 @@ color :white;
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>30</x>
         <y>170</y>
         <width>141</width>
-        <height>51</height>
+        <height>53</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -199,7 +203,7 @@ color :white;
         </layout>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_5">
+        <widget class="QPushButton" name="AddCommande">
          <property name="text">
           <string>Nouvelle Commande</string>
          </property>
@@ -207,10 +211,36 @@ color :white;
        </item>
       </layout>
      </widget>
+     <widget class="QPushButton" name="RecuCommande">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>420</y>
+        <width>75</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Reçu</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="barcode">
+      <property name="geometry">
+       <rect>
+        <x>600</x>
+        <y>343</y>
+        <width>161</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="tab">
      <attribute name="title">
-      <string>Page</string>
+      <string>Ajouter Supplement</string>
      </attribute>
      <widget class="QWidget" name="gridLayoutWidget_2">
       <property name="geometry">
@@ -288,7 +318,7 @@ color :white;
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>160</x>
@@ -313,7 +343,11 @@ color :white;
         </layout>
        </item>
        <item>
-        <widget class="QTableView" name="Tab3_2"/>
+        <widget class="QTableView" name="Tab3_2">
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QPushButton" name="Delete_sup">
@@ -321,17 +355,7 @@ color :white;
           <string extracomment="Cliquez pour supprimer"/>
          </property>
          <property name="styleSheet">
-          <string notr="true">QPushButton {
-background-color:#0094ff;
-font: 8pt &quot;MS Shell Dlg 2&quot;;
-
-}
-QPushButton:hover
-{background-color: rgb(70, 144, 255);
-color :white;
-
-
-}</string>
+          <string notr="true"/>
          </property>
          <property name="text">
           <string>DELETE</string>
@@ -383,17 +407,7 @@ color :white;
            <item>
             <widget class="QPushButton" name="ADD_supp">
              <property name="styleSheet">
-              <string notr="true">QPushButton {
-background-color:#0094ff;
-font: 8pt &quot;MS Shell Dlg 2&quot;;
-
-}
-QPushButton:hover
-{background-color: rgb(70, 144, 255);
-color :white;
-
-
-}</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>ADD</string>
@@ -484,17 +498,7 @@ color :white;
            <item>
             <widget class="QPushButton" name="Modifier_Nom_sup">
              <property name="styleSheet">
-              <string notr="true">QPushButton {
-background-color:#0094ff;
-font: 8pt &quot;MS Shell Dlg 2&quot;;
-
-}
-QPushButton:hover
-{background-color: rgb(70, 144, 255);
-color :white;
-
-
-}</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>Modifier Nom</string>
@@ -518,7 +522,7 @@ color :white;
        <normaloff>../../../../../Downloads/Final/E-Health_care_2A12-remote/folda/add.PNG</normaloff>../../../../../Downloads/Final/E-Health_care_2A12-remote/folda/add.PNG</iconset>
      </attribute>
      <attribute name="title">
-      <string>Views</string>
+      <string>Editer Commande</string>
      </attribute>
      <widget class="QLabel" name="label_7">
       <property name="geometry">
@@ -555,6 +559,9 @@ color :white;
         <height>151</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
      </widget>
      <widget class="QLabel" name="label_couscous">
       <property name="geometry">
@@ -577,6 +584,9 @@ color :white;
         <width>361</width>
         <height>151</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
       </property>
      </widget>
      <widget class="QWidget" name="layoutWidget">
@@ -648,7 +658,7 @@ color :white;
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>210</y>
+        <y>220</y>
         <width>199</width>
         <height>25</height>
        </rect>
@@ -686,7 +696,11 @@ color :white;
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QComboBox" name="IDSmodif"/>
+          <widget class="QComboBox" name="IDSmodif">
+           <property name="styleSheet">
+            <string notr="true">background-color: qlineargradient(spread:repeat, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 22, 216, 255), stop:1 rgba(255, 255, 255, 255));</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -722,7 +736,11 @@ color :white;
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QComboBox" name="NUMCmodif"/>
+          <widget class="QComboBox" name="NUMCmodif">
+           <property name="styleSheet">
+            <string notr="true">background-color: qlineargradient(spread:repeat, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 22, 216, 255), stop:1 rgba(255, 255, 255, 255));</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -744,17 +762,7 @@ color :white;
          <item row="0" column="0">
           <widget class="QPushButton" name="pushButton_midifier">
            <property name="styleSheet">
-            <string notr="true">QPushButton {
-background-color:#0094ff;
-font: 8pt &quot;MS Shell Dlg 2&quot;;
-
-}
-QPushButton:hover
-{background-color: rgb(70, 144, 255);
-color :white;
-
-
-}</string>
+            <string notr="true"/>
            </property>
            <property name="text">
             <string>Modifier Employer</string>
@@ -769,7 +777,7 @@ color :white;
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>400</x>

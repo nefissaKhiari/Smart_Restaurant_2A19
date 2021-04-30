@@ -29,6 +29,8 @@ MainWindow::MainWindow(QWidget *parent) :
     timer_1s->start(1000);
 
 
+
+
 }
 
 MainWindow::~MainWindow()
@@ -45,10 +47,8 @@ void MainWindow::UpdateTime()
 
 
 }
-void MainWindow::on_pushButton_5_clicked()
+void MainWindow::on_AddCommande_clicked()
 {
-
-
     int idp=ui->ID_Employe->text().toInt();
 
     Commande c(idp);
@@ -66,42 +66,38 @@ void MainWindow::on_pushButton_5_clicked()
                                           "click Cancel to exit."),QMessageBox::Cancel);
 this->RefreshTables();
 
-
 }
-
-
-void MainWindow::on_Supprimer_clicked()
+void MainWindow::on_SupprimerCommande_clicked()
 {
 
 
-           QMessageBox msg;
-           QItemSelectionModel *select = ui->Tab->selectionModel();
-           if (!select->hasSelection()){
-                msg.setText("Please select a plate");
 
-                msg.setIcon(msg.Critical);
-                msg.exec();
-                return;
-           }
-           QString IdCom=select->selectedRows().at(0).data().toString();
-           msg.setText(IdCom);
-           msg.exec();
-           int Num = QString (IdCom).toInt();
-           Commande c;
-           bool test=c.SupprimerCommande(Num);
-           if (test)
-               {
-               QMessageBox:: information(nullptr, QObject::tr("OK"),
-                                                  QObject::tr("Suppression effectuée avec succès\n"
-                                                              "click cancel to exit."),QMessageBox::Cancel);
-               }
-           else
-               QMessageBox::critical(nullptr, QObject::tr("Not OK"),
-                                     QObject::tr("suppression non effectué.\n"
-                                                 "click Cancel to exit."),QMessageBox::Cancel);
-       this->RefreshTables();
+QMessageBox msg;
+QItemSelectionModel *select = ui->Tab->selectionModel();
+if (!select->hasSelection()){
+     msg.setText("Please select a plate");
 
-       }
+     msg.setIcon(msg.Critical);
+     msg.exec();
+     return;
+}
+QString IdCom=select->selectedRows().at(0).data().toString();
+
+int Num = QString (IdCom).toInt();
+Commande c;
+bool test=c.SupprimerCommande(Num);
+if (test)
+    {
+    QMessageBox:: information(nullptr, QObject::tr("OK"),
+                                       QObject::tr("Suppression effectuée avec succès\n"
+                                                   "click cancel to exit."),QMessageBox::Cancel);
+    }
+else
+    QMessageBox::critical(nullptr, QObject::tr("Not OK"),
+                          QObject::tr("suppression non effectué.\n"
+                                      "click Cancel to exit."),QMessageBox::Cancel);
+this->RefreshTables();
+}
 
 
 void MainWindow::on_pushButton_4_clicked()
@@ -239,6 +235,15 @@ void MainWindow::RefreshTables(){
 }
 void MainWindow::showEventHelper()
 {
+    ui->ID_Employe->setValidator( new QIntValidator(0, 1000, this) );
+    ui->lineEdit_prix_supp->setValidator( new QIntValidator(0, 100000, this) );
+    ui->lineEdit_prix_sup->setValidator( new QIntValidator(0, 100000, this) );
+    ui->qtyplat->setValidator( new QIntValidator(0, 1000000, this) );
+    ui->lineEdit_Idemploye_2->setValidator( new QIntValidator(0, 1000, this) );
+    ui->lineEdit_QTY->setValidator( new QIntValidator(0, 100000, this) );
+    ui->lineEdit_QTY_2->setValidator( new QIntValidator(0, 100000, this) );
+    ui->qtysupp->setValidator( new QIntValidator(0, 100000, this) );
+
    this->RefreshTables();
 }
 
@@ -286,7 +291,7 @@ void MainWindow::on_UpdateQuantity_clicked()
     }
     QString IDplat=select->selectedRows().at(0).data().toString();
 
-    int qty=ui->lineEdit_QTY->text().toInt();
+    qint32 qty=ui->lineEdit_QTY->text().toInt();
     int num=ui->NUMCmodif->currentText().toInt();
     int platid = QString (IDplat).toInt();
     Commande c;
@@ -471,3 +476,137 @@ void MainWindow::on_serchcom_textEdited(const QString &arg1)
 {
     ui->Tab->setModel(x.chercherCom(ui->serchcom->text()));
 }
+
+
+void MainWindow::on_RecuCommande_clicked()
+{
+    QMessageBox msg1;
+    QItemSelectionModel *select1 = ui->Tab->selectionModel();
+    if (!select1->hasSelection()){
+         msg1.setText("Please select something");
+
+         msg1.setIcon(msg1.Critical);
+         msg1.exec();
+         return;
+    }
+    QSqlQuery query ;
+    query.prepare("select c.*, p.nom, p.prix, cp.qty, s.nom, s.prix, sc.qty from Commandes c, Plates p, CommandePlat cp,supplement s,suppcom sc where cp.numc = c.numc and cp.id_plat = p.idp and sc.numc = c.numc and sc.ids= s.ids and cp.numc = :numc and sc.numc = :numc");
+    QItemSelectionModel *select = ui->Tab->selectionModel();
+    QString idcom=select->selectedRows().at(0).data().toString();
+    query.bindValue(":numc", idcom);
+    query.exec();
+    //BarCode
+    QStringList args = {idcom};
+    args << "D:/Facture/barcode.jpg";
+    QProcess::execute(QString("libs\\barcode\\barcode.exe"),args);
+
+    // date, totale
+    QMessageBox msg;
+    msg.setText(QString("Reçu Imprimer"));
+    msg.exec();
+    QString html =
+    "<center><style>table { border: 5px solid black; }</style><div align=right>"
+       "Tunis le, %1"
+    "</div>"
+    "<div align=left>"
+       "Smart Restaurant<br>"
+       "Esprit<br>"
+
+    "</div>"
+    "<h1 align=center>Facture</h1>"
+    "<p align=justify>"
+     "<table width=400>"
+            "<tr>"
+            "<th width=50>Plate</th>"
+            "<th width=50>Unique Price</th>"
+            "<th width=50>Quantity</th>"
+
+            "<th width=50>Supplement</th>"
+            "<th width=50>Unique Price</th>"
+            "<th width=50>Quantity</th>"
+            "<th width=50>Total</th>"
+
+
+         "</tr>"
+            "%2"
+
+            "</table>"
+    "</p>"
+    "<div align=right>Total: %3</div><center> <img src=\"data:image/png;base64,%4\" width=\"200\", height=\"80\"/>";
+
+    QString row =  "<tr>"
+                     "<td style='border: 1px solid #000000 '>%1</td>"
+                     "<td>%2</td>"
+                     "<td>%3</td>"
+                     "<td>%4</td>"
+                        "<td>%5</td>"
+                        "<td>%6</td>"
+                            "<td>%7</td>"
+
+
+                  "</tr>";
+    QString rows = "";
+    int numc, idemp, prixtot;
+    QString date;
+    while(query.next()){
+         numc = query.value(0).toInt();
+         idemp = query.value(1).toInt();
+         date = query.value(2).toString();
+         prixtot = query.value(3).toInt();
+
+        QString platename = query.value(4).toString();
+        int uniqueprice = query.value(5).toInt();
+        int qty = query.value(6).toInt();
+        QString Supname = query.value(7).toString();
+        int uniquepricesup = query.value(8).toInt();
+        int qtysup = query.value(9).toInt();
+
+
+        if (qty > 0)
+        rows.append(row.arg(platename).arg(uniqueprice).arg( qty).arg(Supname).arg(uniquepricesup).arg(qtysup).arg(qty * uniqueprice + qtysup * uniquepricesup));
+    }
+
+
+    QTextDocument document;
+    document.setDefaultStyleSheet(QString(""
+
+                                          "td, th { text-align: left; border: 2px solid black;} "
+
+                                          "table {margin-right:auto;margin-left:auto;text-align: left; border: 1px solid ;margin-top:60px;width: 80%;}"
+                                          ""));
+
+
+    QPixmap p;
+      QImageReader r("D:/Facture/barcode.jpg");
+      r.setDecideFormatFromContent(true);
+      QImage i = r.read();
+      if (!i.isNull())
+         p = QPixmap::fromImage(i);
+
+
+    // add resource
+ qDebug() << p.width();
+ QImage image = p.toImage();
+  QByteArray byteArray;
+
+  QBuffer buffer(&byteArray);
+
+     image.save(&buffer, "JPEG"); // writes the image in JPEG format inside the buffer
+
+     QString iconBase64 = QString::fromLatin1(byteArray.toBase64().data());
+    document.setHtml(html.arg(date).arg(rows).arg( prixtot).arg(iconBase64));
+
+    QPrinter printer(QPrinter::PrinterResolution);
+    printer.setOutputFormat(QPrinter::PdfFormat);
+    printer.setPaperSize(QPrinter::A4);
+    printer.setOutputFileName("D:/Facture/Recu.pdf");
+    printer.setPageMargins(QMarginsF(15, 15, 15, 15));
+    QPdfWriter pdfWriter("D:/test2.pdf");
+    pdfWriter.setPageSize(QPagedPaintDevice::A4);
+    pdfWriter.setPageMargins(QMargins(30, 30, 30, 30));
+    document.print(&pdfWriter);
+    document.print(&printer);
+}
+
+
+

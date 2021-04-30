@@ -4,6 +4,9 @@
 #include <QMainWindow>
 #include "commande.h"
 #include "supplement.h"
+#include <QPrinter>
+#include <QPdfWriter>
+#include <QProcess>
 
 namespace Ui {
 class MainWindow;
@@ -23,7 +26,7 @@ protected:
 private slots:
 
 
-    void on_Supprimer_clicked();
+
 
     void on_pushButton_4_clicked();
 
@@ -50,7 +53,6 @@ private slots:
 
     void UpdateTime();
 
-    void on_pushButton_5_clicked();
 
 
 
@@ -85,6 +87,14 @@ private slots:
 
 
     void on_serchcom_textEdited(const QString &arg1);
+
+
+
+    void on_RecuCommande_clicked();
+
+    void on_AddCommande_clicked();
+
+    void on_SupprimerCommande_clicked();
 
 private:
     Ui::MainWindow *ui;

@@ -5,6 +5,8 @@
 #-------------------------------------------------
 
 QT       += core gui sql
+QT += printsupport
+
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -38,7 +40,6 @@ HEADERS += \
     supplement.h
 
 FORMS += \
-        ajouterplat.ui \
         mainwindow.ui
 
 # Default rules for deployment.
@@ -46,4 +47,45 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-DISTFILES +=
+DISTFILES += \
+    resource/1486395871-menu_80607.png \
+    resource/1486506264-hamburger-list-menu-options-bars-stack_81469.png \
+    resource/1486564397-menu-green_81507.png \
+    resource/4285e494cea303a1be4655ca68266ec1.png \
+    resource/back.png \
+    resource/background.png \
+    resource/browsing.png \
+    resource/cancel (1).png \
+    resource/check.png \
+    resource/chercher.png \
+    resource/concept-fond-marbre-gris_23-2148773735.png \
+    resource/confirm.png \
+    resource/confirmation.png \
+    resource/cross .png \
+    resource/delete.png \
+    resource/dish .png \
+    resource/document.png \
+    resource/edit .png \
+    resource/email.png \
+    resource/excel (1).png \
+    resource/excel (2).png \
+    resource/excel.png \
+    resource/login.png \
+    resource/menu (1).png \
+    resource/menu (2).png \
+    resource/menu.png \
+    resource/message.png \
+    resource/pdf (1).png \
+    resource/plate.png \
+    resource/plus (1).png \
+    resource/plus.png \
+    resource/printer.png \
+    resource/reception-bell.png \
+    resource/remove.png \
+    resource/restaura.png \
+    resource/restaurant (1).png \
+    resource/restaurant.png \
+    resource/sort.png \
+    resource/tray.png \
+    resource/vegetables4_b72-.png \
+    resource/xls (1).png
