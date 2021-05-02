@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QSqlQueryModel>
+#include <QSqlQuery>
 class Employe
 {
 public:
@@ -25,6 +26,10 @@ public:
     QSqlQueryModel * Find_Employe();
     QSqlQueryModel * rechercher(QString search);
     QSqlQueryModel * tri();
+    bool login(QString, QString);
+    QSqlQueryModel  *trierid_employe();
+    QSqlQueryModel  *trier_nom_emplye();
+    QSqlQueryModel  *trier_prenom_emplye();
 private:
     int id;
     QString nom , prenom,adresse ;

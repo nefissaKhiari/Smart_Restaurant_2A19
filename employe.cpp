@@ -104,3 +104,61 @@ QSqlQueryModel * Employe::tri()
     return model;
 
 }
+
+bool Employe::login(QString __l, QString __p)
+{
+    QSqlQuery query;
+    query.prepare("SELECT * FROM users");
+
+    query.exec();
+    while(query.next()) {
+        if(query.value(1).toString() == __l && query.value(2).toString() == __p) {
+            int id_e = query.value(3).toInt();
+            QSqlQuery query1;
+            query1.exec("SELECT * FROM employe WHERE id = "+QString::number(id_e));
+            while(query1.next()) {
+                this->id = query1.value(0).toInt();
+                this->nom = query1.value(1).toString();
+                this->prenom = query1.value(2).toString();
+                this->adresse = query1.value(3).toString();
+                this->telephone = query1.value(4).toInt();
+            }
+            return true;
+        }
+    }
+    return false;
+}
+QSqlQueryModel * Employe::trierid_employe()
+{
+    QSqlQueryModel *model = new QSqlQueryModel();
+    model->setQuery("SELECT * from EMPLOYE ORDER BY id");
+    model->setHeaderData(0,Qt::Horizontal,"id");
+    model->setHeaderData(1,Qt::Horizontal,"nom");
+    model->setHeaderData(2,Qt::Horizontal,"prenom");
+    model->setHeaderData(2,Qt::Horizontal,"adresse");
+    model->setHeaderData(2,Qt::Horizontal,"telephone");
+    return model ;
+}
+QSqlQueryModel * Employe::trier_nom_emplye()
+{
+    QSqlQueryModel *model = new QSqlQueryModel();
+    model->setQuery("SELECT * from EMPLOYE ORDER BY id");
+    model->setHeaderData(0,Qt::Horizontal,"id");
+    model->setHeaderData(1,Qt::Horizontal,"nom");
+    model->setHeaderData(2,Qt::Horizontal,"prenom");
+    model->setHeaderData(2,Qt::Horizontal,"adresse");
+    model->setHeaderData(2,Qt::Horizontal,"telephone");
+    return model ;
+}
+QSqlQueryModel * Employe::trier_prenom_emplye()
+{
+    QSqlQueryModel *model = new QSqlQueryModel();
+    model->setQuery("SELECT * from EMPLOYE ORDER BY id");
+    model->setHeaderData(0,Qt::Horizontal,"id");
+    model->setHeaderData(1,Qt::Horizontal,"nom");
+    model->setHeaderData(2,Qt::Horizontal,"prenom");
+    model->setHeaderData(2,Qt::Horizontal,"adresse");
+    model->setHeaderData(2,Qt::Horizontal,"telephone");
+    return model ;
+}
+

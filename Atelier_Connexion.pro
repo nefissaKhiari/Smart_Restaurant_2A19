@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql printsupport
+QT       += core gui sql multimedia multimediawidgets printsupport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -27,6 +27,7 @@ CONFIG += c++11
 SOURCES += \
     employe.cpp \
     equipements.cpp \
+    login.cpp \
         main.cpp \
         mainwindow.cpp \
     connection.cpp
@@ -34,10 +35,12 @@ SOURCES += \
 HEADERS += \
     employe.h \
     equipements.h \
+    login.h \
         mainwindow.h \
     connection.h
 
 FORMS += \
+        login.ui \
         mainwindow.ui
 
 # Default rules for deployment.
