@@ -3,11 +3,8 @@
 # Project created by QtCreator 2018-10-26T21:45:23
 #
 #-------------------------------------------------
-QT       += core gui printsupport
-QT       += core gui sql
-QT       += core gui network
 
-
+QT       += core gui sql multimedia multimediawidgets printsupport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -28,21 +25,22 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
-    livraisons.cpp \
+    employe.cpp \
+    equipements.cpp \
+    login.cpp \
         main.cpp \
         mainwindow.cpp \
-    connection.cpp \
-    smtp.cpp \
-    vehicule.cpp
+    connection.cpp
 
 HEADERS += \
-    livraisons.h \
+    employe.h \
+    equipements.h \
+    login.h \
         mainwindow.h \
-    connection.h \
-    smtp.h \
-    vehicule.h
+    connection.h
 
 FORMS += \
+        login.ui \
         mainwindow.ui
 
 # Default rules for deployment.
@@ -52,9 +50,3 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     resource.qrc
-
-DISTFILES += \
-    resource/confirm.png \
-    resource/cross .png \
-    resource/cross .png \
-    resource/edit .png

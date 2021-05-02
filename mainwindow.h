@@ -1,8 +1,13 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-#include "livraisons.h"
-#include "vehicule.h"
+#include "employe.h"
+#include "equipements.h"
 #include <QMainWindow>
+#include <QFile>
+#include <QTextStream>
+#include <QDateTime>
+#include <QMediaPlayer>
+
 
 
 namespace Ui {
@@ -19,51 +24,89 @@ public:
 
 private slots:
 
+void on_tabWidget_currentChanged(int);
 
-    void on_supp_clicked();
+void on_modifier_clicked();
 
-    void on_tabWidget_currentChanged(int index);
+void on_ajout_clicked();
+
+void on_sup_clicked();
 
 
-
-
-
-    void on_ajout_clicked();
-
-    void on_mod_clicked();
+private slots:
 
 
 
-    void on_modv_clicked();
 
-    void on_suppv_clicked();
+void on_ajouteq_clicked();
 
-    void on_ajoutv_clicked();
+void on_supeq_clicked();
+
+void on_modifeq_clicked();
+
+void on_supprimer_currentChanged(int);
+
+void on_pushButton_3_clicked();
+
+void on_Excel_clicked();
+
+void on_imprimer_clicked();
+
+void on_lineEdit_textEdited(const QString &arg1);
+
+void on_trier_clicked();
+
+void on_recherche_textEdited(const QString &arg1);
+
+void on_chat_clicked();
 
 
+void on_pb_login_clicked();
 
-    void on_recherche_textEdited(const QString &arg1);
+void on_employe_clicked();
 
+void on_equipement_clicked();
 
+void on_retour_clicked();
 
-    //void on_tabWidget_2_currentChanged(int index);
+void on_retour2_clicked();
 
-    void on_trii_clicked();
+void on_chat_2_clicked();
 
-    void on_pushButton_3_clicked();
+void on_retour3_clicked();
 
-    void on_pushButton_4_clicked();
+void on_envoyer_clicked();
 
-    void on_pushButton_5_clicked();
+void on_mail_clicked();
 
-    void on_mail_clicked();
+void on_mdp_clicked();
 
-    void on_pushButton_clicked();
+void on_retour4_clicked();
+
+void on_exit_clicked();
+
+void on_horizontalSlider_sliderMoved(int position);
+
+void on_horizontalSlider_2_sliderMoved(int position);
+
+void on_start_clicked();
+
+void on_pushButton_stop_clicked();
+
+void on_checkBox_clicked();
+
+void on_trier_id_employe_clicked();
+
+void on_trier_nom_emplye_clicked();
+
+void on_trier_prenom_employe_clicked();
 
 private:
     Ui::MainWindow *ui;
-    livraisons tmplivraisons;
-        Vehicule tmpv;
+    Employe tmpemploye;
+    Equipement tmpequipement;
+    Employe session;
+    QMediaPlayer *player;
 };
 
-#endif // MAINWINDOW_H
+#endif // MAINWIND
