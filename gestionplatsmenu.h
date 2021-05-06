@@ -9,7 +9,7 @@
 #include<QObject>
 #include<QMediaPlayer>
 
-#include "arduino.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Gestionplatsmenu; }
@@ -137,25 +137,12 @@ private slots:
     void makePlot_type ();
         QVector<double> Statistique_type();
         void on_pushButton_25_clicked();
-        void update_label();   // slot permettant la mise à jour du label état de la lampe 1,
-        // ce slot est lancé à chaque réception d'un message de Arduino
-
-        void on_arduino_clicked();   // bouton ON
-
-
-        void on_notepad_clicked();
-
-        void on_webpage_clicked();
 
 private:
     Ui::Gestionplatsmenu *ui;
      Plats P;
      Menu M;
      QMediaPlayer* player;
-
-     QByteArray  data; // variable contenant les données reçues
- QString input_password="";
-     Arduino A; // objet temporaire
 
  QStringList files;
 };

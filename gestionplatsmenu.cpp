@@ -1,5 +1,5 @@
-#include "gestionplatsmenu.h"
-#include "ui_gestionplatsmenu.h"
+#include "restaurant.h"
+#include "ui_restaurant.h"
 #include "plats.h"
 #include <QPrinter>
 #include<QPrintDialog>
@@ -21,11 +21,6 @@
 #include "notifications.h"
 #include "qcustomplot.h"
 #include <QtCharts>
-#include "notepad.h"
-#include<QtCharts>
-#include<QBarSet>
-#include<QBarSeries>
-
 #include <QChartView>
 #include <QBarSeries>
 #include <QBarSet>
@@ -37,27 +32,16 @@
 #include <QPieSeries>
 #include <QPieSlice>
 
-#include <QDesktopServices>
-#include <QUrl>
+
 #include<excel.h>
 
 
 
-Gestionplatsmenu::Gestionplatsmenu(QWidget *parent)
+restaurant::restaurant(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::Gestionplatsmenu)
+    , ui(new Ui::restaurant)
 {
     ui->setupUi(this);
-    int ret=A.connect_arduino(); // lancer la connexion à arduino
-    switch(ret){
-    case(0):qDebug()<< "arduino is available and connected to : "<< A.getarduino_port_name();
-        break;
-    case(1):qDebug() << "arduino is available but not connected to :" <<A.getarduino_port_name();
-       break;
-    case(-1):qDebug() << "arduino is not available";
-    }
-     QObject::connect(A.getserial(),SIGNAL(readyRead()),this,SLOT(update_label())); // permet de lancer
-     //le slot update_label suite à la reception du signal readyRead (reception des données).
 
     ui->tabWidget_2->setCurrentIndex(0);
     QTabBar *tabBar = ui->tabWidget_2->findChild<QTabBar *>();
@@ -93,19 +77,19 @@ Gestionplatsmenu::Gestionplatsmenu(QWidget *parent)
     connect(ui->browseBtn, SIGNAL(clicked()), this, SLOT(browse()));
 
     player = new QMediaPlayer(this);
-    connect(player, &QMediaPlayer::positionChanged, this,&Gestionplatsmenu::on_positionChanged );
-        connect(player, &QMediaPlayer::durationChanged, this,&Gestionplatsmenu::on_durationChanged );
+    connect(player, &QMediaPlayer::positionChanged, this,&restaurant::on_positionChanged );
+        connect(player, &QMediaPlayer::durationChanged, this,&restaurant::on_durationChanged );
 
 
 }
 
-Gestionplatsmenu::~Gestionplatsmenu()
+restaurant::~restaurant()
 {
     delete ui;
 }
 
 
-void Gestionplatsmenu:: showTime()
+void restaurant:: showTime()
 {
     QTime time = QTime::currentTime();
 
@@ -120,7 +104,7 @@ void Gestionplatsmenu:: showTime()
 
 
 }
-void Gestionplatsmenu::INFORMER(QLabel *label, QString message, int duration){
+void restaurant::INFORMER(QLabel *label, QString message, int duration){
     label->setVisible(true);
     label->setText(message);
     QTimer::singleShot(duration, ui->labelmessage, &QLabel::hide);
@@ -130,7 +114,7 @@ void Gestionplatsmenu::INFORMER(QLabel *label, QString message, int duration){
 }
 
 
-void Gestionplatsmenu::on_ajouter_B_clicked()
+void restaurant::on_ajouter_B_clicked()
 {
     bool overAll = false, nom_B, categorie_B, prix_B;
 int id_menu= ui->idmenu->currentText().toInt();
@@ -191,7 +175,7 @@ int id_menu= ui->idmenu->currentText().toInt();
     }
                 }
   }
-void Gestionplatsmenu::on_ListDelete_B_clicked()
+void restaurant::on_ListDelete_B_clicked()
 {
     Plats P;
     P.setId(ui->idList_CB->currentText().toInt());
@@ -210,7 +194,7 @@ void Gestionplatsmenu::on_ListDelete_B_clicked()
     }
 
 }
-void Gestionplatsmenu::on_ConfrimEdit_B_clicked()
+void restaurant::on_ConfrimEdit_B_clicked()
 {
     Plats P1;
 
@@ -239,7 +223,7 @@ void Gestionplatsmenu::on_ConfrimEdit_B_clicked()
   ui->tabWidget_2->setCurrentIndex(1);
 }
 
-void Gestionplatsmenu::on_ListEdit_B_clicked()
+void restaurant::on_ListEdit_B_clicked()
 {
     QSqlQuery qry;
     QString id_string = QString::number(ui->idList_CB->currentText().toInt());
@@ -259,7 +243,7 @@ void Gestionplatsmenu::on_ListEdit_B_clicked()
     ui->tabWidget_2->setCurrentIndex(2);
 }
 
-void Gestionplatsmenu::on_ListEditME_B_clicked()
+void restaurant::on_ListEditME_B_clicked()
 {
     QSqlQuery qry;
     QString id_string = QString::number(ui->idListME_CB->currentText().toInt());
@@ -277,7 +261,7 @@ void Gestionplatsmenu::on_ListEditME_B_clicked()
     ui->tabWidget_2->setCurrentIndex(4);
 }
 
-void Gestionplatsmenu::on_ListDeleteME_B_clicked()
+void restaurant::on_ListDeleteME_B_clicked()
 {
     Menu M;
     M.setId(ui->idListME_CB->currentText().toInt());
@@ -301,7 +285,7 @@ void Gestionplatsmenu::on_ListDeleteME_B_clicked()
 
 
 
-void Gestionplatsmenu::on_ConfrimEditME_B_clicked()
+void restaurant::on_ConfrimEditME_B_clicked()
 {
     Menu M1 ;
     M1.setId(ui->idListME_CB->currentText().toInt());
@@ -324,7 +308,7 @@ void Gestionplatsmenu::on_ConfrimEditME_B_clicked()
        ui->tabWidget_2->setCurrentIndex(3);
 }
 
-void Gestionplatsmenu::on_bouton_imprimer_clicked()
+void restaurant::on_bouton_imprimer_clicked()
 {
     QString strStream;
                 QTextStream out(&strStream);
@@ -394,7 +378,7 @@ void Gestionplatsmenu::on_bouton_imprimer_clicked()
 
 
 
-void Gestionplatsmenu::on_exporter_2_clicked()
+void restaurant::on_exporter_2_clicked()
 {
     QString fileName = QFileDialog::getSaveFileName(this, tr("Excel file"), qApp->applicationDirPath (),
                                                     tr("Excel Files (*.xls)"));
@@ -440,12 +424,12 @@ void Gestionplatsmenu::on_exporter_2_clicked()
 
 
 
-void Gestionplatsmenu::on_pushButton_3_clicked()
+void restaurant::on_pushButton_3_clicked()
 {
      ui->menu_tab->setModel(M.afficher1()) ;
 }
 
-void Gestionplatsmenu::on_exporterM_clicked()
+void restaurant::on_exporterM_clicked()
 {
     QString strStream;
                 QTextStream out(&strStream);
@@ -500,7 +484,7 @@ void Gestionplatsmenu::on_exporterM_clicked()
                 delete document;
 }
 
-void Gestionplatsmenu::on_exporterXM_clicked()
+void restaurant::on_exporterXM_clicked()
 {
     QString fileName = QFileDialog::getSaveFileName(this, tr("Excel file"), qApp->applicationDirPath (),
                                                     tr("Excel Files (*.xls)"));
@@ -528,7 +512,7 @@ void Gestionplatsmenu::on_exporterXM_clicked()
 
 
 
-void Gestionplatsmenu::on_bouton_imprimer_3_clicked()
+void restaurant::on_bouton_imprimer_3_clicked()
 {
     ui->tabWidget_2->setCurrentIndex(5);
 }
@@ -536,44 +520,44 @@ void Gestionplatsmenu::on_bouton_imprimer_3_clicked()
 
 
 
-void Gestionplatsmenu::on_pushButton_5_clicked()
+void restaurant::on_pushButton_5_clicked()
 {
      ui->tabWidget_2->setCurrentIndex(3);
 }
 
-void Gestionplatsmenu::on_pushButton_6_clicked()
+void restaurant::on_pushButton_6_clicked()
 {
     ui->tabWidget_2->setCurrentIndex(1);
-    Gestionplatsmenu::makePlot_type();
+    restaurant::makePlot_type();
 
 
 }
 
-void Gestionplatsmenu::on_bouton_imprimer_4_clicked()
+void restaurant::on_bouton_imprimer_4_clicked()
 {
     ui->tabWidget_2->setCurrentIndex(0);
 }
 
-void Gestionplatsmenu::on_pushButton_clicked()
+void restaurant::on_pushButton_clicked()
 {
    ui->tabWidget_2->setCurrentIndex(1);
 }
 
-void Gestionplatsmenu::on_pushButton_2_clicked()
+void restaurant::on_pushButton_2_clicked()
 {
   ui->tabWidget_2->setCurrentIndex(0);
 }
 
 
 
-void Gestionplatsmenu::on_chercher_textChanged(const QString &arg1)
+void restaurant::on_chercher_textChanged(const QString &arg1)
 {
     QString by=ui->listechercher->currentText();
             ui->plat_tab->setModel(P.chercher(arg1,by));
 
 }
 
-void Gestionplatsmenu::on_trier_clicked()
+void restaurant::on_trier_clicked()
 {
     QString Tri = ui->listtrier->currentText();
             ui->plat_tab->setModel(P.Trier(Tri));
@@ -583,7 +567,7 @@ void Gestionplatsmenu::on_trier_clicked()
 
 
 
-void Gestionplatsmenu::on_pushButton_8_clicked()
+void restaurant::on_pushButton_8_clicked()
 {
     ui->plat_tab->setModel(P.afficher()) ;
     INFORMER(ui->labelmessage,"LISTE PLAT CHARGEE   ",3000);
@@ -591,7 +575,7 @@ void Gestionplatsmenu::on_pushButton_8_clicked()
 
 
 
-void Gestionplatsmenu::on_pushButton_9_clicked()
+void restaurant::on_pushButton_9_clicked()
 {
 
         QString nom = ui->nomME_LE->text();
@@ -618,7 +602,7 @@ void Gestionplatsmenu::on_pushButton_9_clicked()
       {INFORMER(ui->labelmessage2,"MENU NON AJOUTE ",3000);
       }
 }
-void Gestionplatsmenu::browse()
+void restaurant::browse()
 {
     files.clear();
 
@@ -636,7 +620,7 @@ void Gestionplatsmenu::browse()
     ui->file->setText( fileListString );
 
 }
-void   Gestionplatsmenu::sendMail()
+void   restaurant::sendMail()
 {
     Smtp* smtp = new Smtp("farah.hasnaoui@esprit.tn",ui->mail_pass->text(), "smtp.gmail.com");
     connect(smtp, SIGNAL(status(QString)), this, SLOT(mailSent(QString)));
@@ -646,7 +630,7 @@ void   Gestionplatsmenu::sendMail()
     else
         smtp->sendMail("farah.hasnaoui@esprit.tn", ui->rcpt->text() , ui->subject->text(),ui->msg->toPlainText());
 }
-void   Gestionplatsmenu::mailSent(QString status)
+void   restaurant::mailSent(QString status)
 {
 
     if(status == "Message envoyee")
@@ -658,35 +642,35 @@ void   Gestionplatsmenu::mailSent(QString status)
     ui->mail_pass->clear();
 }
 
-void Gestionplatsmenu::on_chercher_2_textChanged(const QString &arg1)
+void restaurant::on_chercher_2_textChanged(const QString &arg1)
 {
     QString by=ui->listechercher_2->currentText();
             ui->menu_tab->setModel(M.chercher1(arg1,by));
 }
 
-void Gestionplatsmenu::on_trier_2_clicked()
+void restaurant::on_trier_2_clicked()
 {
     QString Tri = ui->listtrier_2->currentText();
             ui->menu_tab->setModel(M.Trier1(Tri));
 }
 
-void Gestionplatsmenu::on_pushButton_10_clicked()
+void restaurant::on_pushButton_10_clicked()
 {
     ui->menu_tab->setModel(M.afficher1()) ;
     INFORMER(ui->labelmessage2,"LISTE Menu CHARGEE   ",3000);
 }
 
-void Gestionplatsmenu::on_sliderprog_sliderMoved(int position)
+void restaurant::on_sliderprog_sliderMoved(int position)
 {
 player->setPosition(position);
 }
 
-void Gestionplatsmenu::on_slidervolume_sliderMoved(int position)
+void restaurant::on_slidervolume_sliderMoved(int position)
 {
 player->setVolume(position);
 }
 
-void Gestionplatsmenu::on_pushButton_18_clicked()
+void restaurant::on_pushButton_18_clicked()
 {
     //load file
     player->setMedia(QUrl("C:/Users/Home/Documents/gestionplats-menu/m.mp3"));
@@ -694,22 +678,22 @@ void Gestionplatsmenu::on_pushButton_18_clicked()
     qDebug()<< player->errorString();
 }
 
-void Gestionplatsmenu::on_pushButton_19_clicked()
+void restaurant::on_pushButton_19_clicked()
 {
     player->stop();
 }
 
-void Gestionplatsmenu::on_positionChanged(qint64 position)
+void restaurant::on_positionChanged(qint64 position)
 {
     ui->sliderprog->setValue(position);
 }
 
-void Gestionplatsmenu::on_durationChanged(qint64 position)
+void restaurant::on_durationChanged(qint64 position)
 {
 ui->sliderprog->setMaximum(position);
 }
 
-void Gestionplatsmenu::on_stat_clicked()
+void restaurant::on_stat_clicked()
 {
 
    /********************* BEGIN : Donut->Nationalite *********************/
@@ -768,31 +752,27 @@ void Gestionplatsmenu::on_stat_clicked()
        chartView->setParent(ui->horizontalFrame);
        /********************* END : Donut->Nationalite *********************/
 
-
        ui->tabWidget_2->setCurrentIndex(6);
-       Gestionplatsmenu::makePlot_type();
-
-
-
+       restaurant::makePlot_type();
 }
 
-void Gestionplatsmenu::on_pushButton_20_clicked()
+void restaurant::on_pushButton_20_clicked()
 {
       ui->tabWidget_2->setCurrentIndex(1);
 }
 
 
 
-void Gestionplatsmenu::on_pushButton_13_clicked()
+void restaurant::on_pushButton_13_clicked()
 {
     ui->tabWidget_2->setCurrentIndex(3);
 }
 
-void Gestionplatsmenu::on_pushButton_22_clicked()
+void restaurant::on_pushButton_22_clicked()
 {
       ui->tabWidget_2->setCurrentIndex(1);
 }
-QVector<double> Gestionplatsmenu::Statistique_type()
+QVector<double> restaurant::Statistique_type()
 {
     QSqlQuery q;
     QVector<double> stat(2);
@@ -814,7 +794,7 @@ QVector<double> Gestionplatsmenu::Statistique_type()
 
     return stat;
 }
-void Gestionplatsmenu::makePlot_type()
+void restaurant::makePlot_type()
 {
     // prepare data:
     QVector<double> x3(2), y3(20);
@@ -831,7 +811,7 @@ void Gestionplatsmenu::makePlot_type()
 
     QCPBars *bars1 = new QCPBars(ui->CustomPlot->xAxis, ui->CustomPlot->yAxis);
     bars1->setWidth(2/(double)x3.size());
-    bars1->setData(x3, Gestionplatsmenu::Statistique_type());
+    bars1->setData(x3, restaurant::Statistique_type());
     bars1->setName("nombre du plats selon type");
     bars1->setPen(QPen(QColor(200, 40, 60).lighter(170)));
 
@@ -893,37 +873,7 @@ void Gestionplatsmenu::makePlot_type()
 
 }
 
-void Gestionplatsmenu::on_pushButton_25_clicked()
+void restaurant::on_pushButton_25_clicked()
 {
-    Gestionplatsmenu::makePlot_type();
-}
-void Gestionplatsmenu::update_label()
-{
-    data=A.read_from_arduino();
-
-    if(data=="#")
-  qDebug() << data;
-
-        ui->label_5->setText(input_password); // si les données reçues de arduino via la liaison série sont égales à 1
-    // alors afficher ON
-
-
-}
- void Gestionplatsmenu::on_arduino_clicked()
- {
-     A.write_to_arduino("#"); //envoyer 1 à arduino
- }
-
-void Gestionplatsmenu::on_notepad_clicked()
-{
-   notepad *ga;
-     ga = new  notepad();
-     ga->show();
-}
-
-void Gestionplatsmenu::on_webpage_clicked()
-{
-    QString link="http://www.google.com";
-
-    QDesktopServices::openUrl(QUrl(link));
+    restaurant::makePlot_type();
 }

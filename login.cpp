@@ -2,6 +2,8 @@
 #include "login.h"
 #include "ui_login.h"
 #include <QMessageBox>
+#include <QMediaPlayer>
+#include <QMediaPlaylist>
 #include <QThread>
 login::login(QWidget *parent) :
     QMainWindow(parent),
@@ -30,7 +32,7 @@ void login::on_pushButton_connect_clicked()
                               QThread::sleep(1);
                            qDebug() <<"login etablie";*/
                          this->hide();
-                          MainWindow *newmain=new MainWindow();
+                          restaurant *newmain=new restaurant();
                           newmain->show();
                       }
          else

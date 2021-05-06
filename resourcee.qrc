@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>resource/plus (1).png</file>
+        <file>resource/cancel (1).png</file>
+        <file>resource/login.png</file>
+        <file>resource/clientimg.png</file>
+    </qresource>
+</RCC>

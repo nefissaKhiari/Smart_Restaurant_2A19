@@ -1,7 +1,7 @@
 #ifndef LOGIN_H
 #define LOGIN_H
 #include <QDialog>
-#include "mainwindow.h"
+#include "restaurant.h"
 
 
 namespace Ui {
@@ -27,7 +27,7 @@ signals:
     //
 private:
     Ui::login *ui;
-    MainWindow *m;
+    restaurant *m;
 };
 
 #endif // LOGIN_H
