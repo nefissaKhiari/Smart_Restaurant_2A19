@@ -1,0 +1,38 @@
+bool User::SendEmail()
+{
+    QString etat = QString::number(Etat);
+
+    SmtpClient smtp("smtp.gmail.com", 465 , SmtpClient::SslConnection);
+
+    smtp.setUser("houcem.chett@gmail.com");
+    smtp.setPassword("03041999houcem");
+
+    MimeMessage message;
+
+    message.setSender(new EmailAddress("houcem.chett@gmail.com", "SCARRAA"));
+    message.addRecipient(new EmailAddress(Email, First));
+    message.setSubject("HauntedHouse !!");
+
+    MimeText text;
+
+    text.setText(etat);
+
+    message.addPart(&text);
+
+    bool test1 = smtp.connectToHost();
+    bool test2 = smtp.login();
+    bool test3 = smtp.sendMail(message);
+    smtp.quit();
+
+    if (test1)
+    {
+        if(test2)
+        {
+            if(test3)
+            {
+                return true;
+            }
+        }
+    }
+    return false;
+}
